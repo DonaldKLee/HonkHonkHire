@@ -1,0 +1,101 @@
+html {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  margin: 10vh 15vw;
+}
+
+.logo {
+  align-self: center;
+  width: 60px;
+  margin-bottom: 70px;
+}
+
+.progressbar {
+  align-self: center;
+  width: 70vw;
+  margin-bottom: 60px;
+}
+
+.question {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  margin-bottom: 40px;
+}
+
+.chips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
+}
+
+.chip {
+  padding: 12px 24px;
+  border-width: 1.7px;
+  border-style: solid;
+  border-color: #319795;
+  background-color: white;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #319795;
+  cursor: pointer;
+  margin: 0px 12px 12px 0px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.chip:hover {
+  background-color: #319795;
+  color: white;
+}
+
+.chip.is-selected {
+  background-color: #319795;
+  color: white;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.back-button {
+  padding: 12px 24px;
+  border-width: 1.7px;
+  border-style: solid;
+  border-color: #805AD5;
+  background-color: white;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #805AD5;
+  cursor: pointer;
+}
+
+.next-button {
+  padding: 12px 24px;
+  border-width: 1.7px;
+  border-style: solid;
+  background-color: #805AD5;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+
+.toggle-content {
+  display: none;
+}
+
+.toggle-content.is-visible {
+  display: flex;
+}

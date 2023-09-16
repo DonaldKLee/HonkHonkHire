@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding Page</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/onboardingPage.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div>
+    <div class="step toggle-content is-visible" id="step0">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress1.svg" alt="progress1" />
+      <div class="question">
+        <h1>What industry do you work in?</h1>
+      </div>
+      <div class="chips">
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Tech">Tech</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Customer Service">Customer Service</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Education">Education</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Healthcare">Healthcare</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Retail">Retail</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Consulting">Consulting</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Other">Other</button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
+    </div>
+    <div class="step toggle-content" id="step1">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress2.svg" alt="progress2" />
+      <div class="question">
+        <h1>What role are you applying for?</h1>
+      </div>
+      <div class="chips">
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Product Designer">Product Designer</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Product Manager">Product Manager</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="QA">QA</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Marketing">Marketing</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Software Engineer">Software Engineer</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Human Resources">Human Resources</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Other">Other</button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
+    </div>
+    <div class="step toggle-content" id="step2">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress3.svg" alt="progress3" />
+      <div class="question" style="margin-bottom: 32px;">
+        <h1>What is your level of experience?</h1>
+        <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
+          we're evaluating your performance relative to your peers.</h2>
+      </div>
+      <div class="chips" style="margin-bottom: 112px;">
+        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Entry">Entry</span><span
+            style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">Less than 3 years of work
+            experience
+          </span></button>
+        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Intermediate">Intermediate</span><span
+            style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">3-8 years of work experience
+          </span></button>
+        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Senior">Senior</span><span
+            style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">8+ years of work experience
+          </span></button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
+    </div>
+    <div class="step toggle-content" id="step3">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress4.svg" alt="progress4" />
+      <div class="question">
+        <h1>What areas are you most interested in improving?</h1>
+      </div>
+      <div class="chips" style="margin-bottom: 28px;">
+        <button class="chip">Being more concise</button>
+        <button class="chip">Less filler words</button>
+        <button class="chip">Confidence</button>
+        <button class="chip">Increasing eye-contact</button>
+        <button class="chip">Speaking slower</button>
+        <button class="chip">Other</button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
+    </div>
+    <div class="step toggle-content" id="step4">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress5.svg" alt="progress5" />
+      <div class="question">
+        <h1>Add your personal experience</h1>
+        <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
+          to receive questions tailored specifically for you.</h2>
+      </div>
+  
+        <label><b>Resume</b></label>
+        <input type="file" id="resumeInput" name="resume" accept=".pdf"/>
+        <!-- <button type="button" onclick="submitPDF()" id="submitPDF">Submit</button> -->
+
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
+    </div>
+
+
+    <div class="step toggle-content" id="step5">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress5.svg" alt="progress5" />
+      <div class="question">
+        <h1>Let's get started!</h1>
+        <p>In the next step, you will need to give us access to your microphone and camera!</p>
+        <!-- Submits the form and pdf to Node.js -->
+        <button>I'm ready!</button>
+      </div>
+      
+
+
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+
+  <script>
+        function submitPDF() {
+        resumeFile = document.getElementById("resumeInput").files[0];
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+            authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+            projectId: "hackthenorth-ed2fa",
+            storageBucket: "hackthenorth-ed2fa.appspot.com",
+            messagingSenderId: "95447128297",
+            appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+            measurementId: "G-K1TGR981FM"
+            };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const ref = firebase.storage().ref();
+        const name = `${new Date}-${resumeFile.name}`
+        const metadata = {
+            contentType : resumeFile.type
+        }
+        const pdfFile = ref.child(name).put(resumeFile, metadata)
+
+        pdfFile
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(url => {
+            console.log(url);
+            fetch(`/quiz/uploadResume?r=${url}`, {
+                method: 'GET',
+            }).then((resp) => {
+                return resp.json();
+            }).then((data) => {
+                console.log(data);
+            }).catch((error) => {
+                console.error('Error:', error);
+            });
+        })
+        .catch(err => console.log(err))
+    };
+
+    var currStep = 0;
+    var step0ans = ""
+    var step1ans = ""
+    var step2ans = ""
+    var step3ans = []
+    var step4ans = {}
+
+    var handleSingleSelect = function (elem, step) {
+      elem.classList.toggle('is-selected');
+      if (step == 0) {
+        if (step0ans != "") {
+          document.getElementById(step0ans).classList.remove('is-selected')
+        }
+        step0ans = elem.innerHTML;
+      } else if (step == 1) {
+        if (step1ans != "") {
+          document.getElementById(step1ans).classList.remove('is-selected')
+        }
+        step1ans = elem.innerHTML;
+      } else if (step == 2) {
+        if (step2ans != "") {
+          document.getElementById(step2ans).classList.remove('is-selected')
+        }
+        step2ans = elem.innerHTML;
+      }
+    }
+
+    var handleMultiSelect = function (elem) {
+      elem.classList.toggle('is-selected');
+      //step4ans.push(elem.)
+    }
+
+    var handleSteps = function (change) {
+      let newStep = currStep + change;
+      if (newStep < 0) {
+        // do nothing
+      } else {
+        document.getElementById(`step${currStep}`).classList.remove('is-visible')
+        document.getElementById(`step${newStep}`).classList.add('is-visible');
+        if (change > 0) {
+          currStep++
+        } else {
+          currStep--
+        }
+      }
+    }
+
+    var toggleVisibility = function (elem) {
+      elem.classList.toggle('is-visible');
+    };
+  </script>
+
+</body>
+
+</html>

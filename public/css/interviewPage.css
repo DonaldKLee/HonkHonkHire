@@ -1,0 +1,8 @@
+#webcam {
+  width: 630px;
+  height: 300px;
+  margin-left: 0px;
+  border: 3px solid #ccc;
+  background: black;
+  transform: scaleX(-1);
+}
