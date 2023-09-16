@@ -14,10 +14,8 @@
 
     <h3>Upload a pdf of your resume file or it's text (later) so we can generate questions for you!</h3>
 
-    <form action="/uploadResume" method="post">
-        <input type="file" id="resumeInput" name="resume" accept=".pdf"/>
-        <button type="button" onclick="submitPDF()" id="submitPDF">Submit</button>
-    </form>
+    <input type="file" id="resumeInput" name="resume" accept=".pdf"/>
+    <button type="button" onclick="submitPDF()" id="submitPDF">Submit</button>
 
      <!-- The core Firebase JS SDK is always required and must be listed first -->
      <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
@@ -32,19 +30,6 @@
         startRecordingButton.addEventListener('click', startRecording);
         stopRecordingButton.addEventListener('click', stopRecording);
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
-            authDomain: "hackthenorth-ed2fa.firebaseapp.com",
-            projectId: "hackthenorth-ed2fa",
-            storageBucket: "hackthenorth-ed2fa.appspot.com",
-            messagingSenderId: "95447128297",
-            appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
-            measurementId: "G-K1TGR981FM"
-        };
- 
-         // Initialize Firebase
-         firebase.initializeApp(firebaseConfig);
-
         async function startRecording() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -57,31 +42,17 @@
                     }
                 };
 
-                mediaRecorder.onstop = () => {
+                mediaRecorder.onstop = async () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    const ref = firebase.storage().ref();
-                     const file = audioBlob;
-                    const name = `${new Date}-audio.wav`
-                    const metadata = {
-                        contentType : 'audio/wav'
-                    }
-                    const task = ref.child(name).put(file, metadata)
-        
-                    task
-                    .then(snapshot => snapshot.ref.getDownloadURL())
-                    .then(url => {
-                        console.log(url);
-                        fetch(`/audio?a=${url}`, {
-                            method: 'GET',
-                        }).then((resp) => {
-                            return resp.json();
-                        }).then((data) => {
-                            console.log(data);
-                        }).catch((error) => {
-                            console.error('Error:', error);
-                        });
+                    console.log(audioBlob);
+                    const formData = new FormData();
+                    formData.append('audio', audioBlob, 'recording.wav');
+
+                    fetch('/upload-audio', {
+                        method: 'POST',
+                        body: formData,
                     })
-                    .catch(err => console.log(err))
+
                     downloadLink.style.display = 'block';
                 };
 
@@ -103,25 +74,35 @@
             }
         }
     </script>
-</body>
-</html>
-
+    
 <script>
-    async function submitPDF() {
-        resumePath = document.getElementById("resumeInput").value;
+    function submitPDF() {
+        resumeFile = document.getElementById("resumeInput").files[0];
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+            authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+            projectId: "hackthenorth-ed2fa",
+            storageBucket: "hackthenorth-ed2fa.appspot.com",
+            messagingSenderId: "95447128297",
+            appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+            measurementId: "G-K1TGR981FM"
+            };
+
+        firebase.initializeApp(firebaseConfig);
 
         const ref = firebase.storage().ref();
-        const name = `${new Date}-pdf.wav`
+        const name = `${new Date}-${resumeFile.name}`
         const metadata = {
-            contentType : '.pdf'
+            contentType : resumeFile.type
         }
-        const pdfFile = ref.child(name).put(resumePath, metadata)
+        const pdfFile = ref.child(name).put(resumeFile.name, metadata)
 
         pdfFile
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then(url => {
             console.log(url);
-            fetch(`/uploadResume?a=${url}`, {
+            fetch(`/quiz/uploadResume?r=${url}`, {
                 method: 'GET',
             }).then((resp) => {
                 return resp.json();
@@ -135,6 +116,8 @@
         downloadLink.style.display = 'block';
     };
 </script>
+</body>
+</html>
 
 <!-- <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
