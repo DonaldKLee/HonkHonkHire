@@ -1,3 +1,0 @@
-function pdfFileSubmitted() {
-    alert("hd");
-}

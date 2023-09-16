@@ -6,14 +6,11 @@
     <div>
         <h3>Upload a pdf of your resume file or it's text (later) so we can generate questions for you!</h3>
 
-        <form>
-            <input type="file" name="upload" accept=".pdf"/>
-            <button type='button' onclick='pdfFileSubmitted()' id="submitPDF">Submit</button>
+        <form action="/uploadResume" method="post">
+            <input type="file" name="resume" accept=".pdf"/>
+            <input type="submit" id="submitPDF" />
         </form>
 
     </div>
 </body>
-
-<script src="js/pdfToText.js"></script>
-
 </html>
