@@ -5,7 +5,12 @@ const router = require('express').Router();
 
 router.get('/uploadResume', async (req, res) => {
     const resumePath = encodeURI(req.query.r);
-    console.log(resumePath);
+    const ans0 = req.query.ans0;
+    const ans1 = req.query.ans1;
+    const ans2 = req.query.ans2;
+    const ans3 = req.query.ans3;
+    
+    console.log(ans0, ans1, ans2, ans3, resumePath);
 
     // try {
     //     // Read the PDF file using fs.readFileSync
