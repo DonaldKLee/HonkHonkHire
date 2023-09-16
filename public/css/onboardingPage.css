@@ -56,7 +56,7 @@ html {
   color: white;
 }
 
-.chip:focus {
+.chip.is-selected {
   background-color: #319795;
   color: white;
 }

@@ -22,13 +22,13 @@
         <h1>What industry do you work in?</h1>
       </div>
       <div class="chips">
-        <button class="chip">Tech</button>
-        <button class="chip">Customer Service</button>
-        <button class="chip">Education</button>
-        <button class="chip">Healthcare</button>
-        <button class="chip">Retail</button>
-        <button class="chip">Consulting</button>
-        <button class="chip">Other</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Tech">Tech</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Customer Service">Customer Service</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Education">Education</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Healthcare">Healthcare</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Retail">Retail</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Consulting">Consulting</button>
+        <button class="chip" onclick="handleSingleSelect(this, 0)" id="Other">Other</button>
       </div>
       <div class="buttons">
         <button class="back-button" onclick="handleSteps(-1)">Back</button>
@@ -37,18 +37,18 @@
     </div>
     <div class="step toggle-content" id="step1">
       <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
-      <img class="progressbar" src="assets/progress2.svg" alt="progress1" />
+      <img class="progressbar" src="assets/progress2.svg" alt="progress2" />
       <div class="question">
         <h1>What role are you applying for?</h1>
       </div>
       <div class="chips">
-        <button class="chip">Product Designer</button>
-        <button class="chip">Product Manager</button>
-        <button class="chip">QA</button>
-        <button class="chip">Marketing</button>
-        <button class="chip">Software Engineer</button>
-        <button class="chip">Human Resources</button>
-        <button class="chip">Other</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Product Designer">Product Designer</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Product Manager">Product Manager</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="QA">QA</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Marketing">Marketing</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Software Engineer">Software Engineer</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Human Resources">Human Resources</button>
+        <button class="chip" onclick="handleSingleSelect(this, 1)" id="Other">Other</button>
       </div>
       <div class="buttons">
         <button class="back-button" onclick="handleSteps(-1)">Back</button>
@@ -57,21 +57,21 @@
     </div>
     <div class="step toggle-content" id="step2">
       <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
-      <img class="progressbar" src="assets/progress3.svg" alt="progress1" />
+      <img class="progressbar" src="assets/progress3.svg" alt="progress3" />
       <div class="question" style="margin-bottom: 32px;">
         <h1>What is your level of experience?</h1>
         <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
           we're evaluating your performance relative to your peers.</h2>
       </div>
       <div class="chips" style="margin-bottom: 112px;">
-        <button class="chip"><span style="align-self: center;">Entry</span><span
+        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Entry">Entry</span><span
             style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">Less than 3 years of work
             experience
           </span></button>
-        <button class="chip"><span style="align-self: center;">Intermediate</span><span
+        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Intermediate">Intermediate</span><span
             style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">3-8 years of work experience
           </span></button>
-        <button class="chip"><span style="align-self: center;">Senior</span><span
+        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Senior">Senior</span><span
             style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">8+ years of work experience
           </span></button>
       </div>
@@ -82,7 +82,7 @@
     </div>
     <div class="step toggle-content" id="step3">
       <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
-      <img class="progressbar" src="assets/progress4.svg" alt="progress1" />
+      <img class="progressbar" src="assets/progress4.svg" alt="progress4" />
       <div class="question">
         <h1>What areas are you most interested in improving?</h1>
       </div>
@@ -101,7 +101,7 @@
     </div>
     <div class="step toggle-content" id="step4">
       <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
-      <img class="progressbar" src="assets/progress5.svg" alt="progress1" />
+      <img class="progressbar" src="assets/progress5.svg" alt="progress5" />
       <div class="question">
         <h1>Add your personal experience</h1>
         <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
@@ -119,6 +119,36 @@
   </div>
   <script>
     var currStep = 0;
+    var step0ans = ""
+    var step1ans = ""
+    var step2ans = ""
+    var step3ans = []
+    var step4ans = {}
+
+    var handleSingleSelect = function (elem, step) {
+      elem.classList.toggle('is-selected');
+      if (step == 0) {
+        if (step0ans != "") {
+          document.getElementById(step0ans).classList.remove('is-selected')
+        }
+        step0ans = elem.innerHTML;
+      } else if (step == 1) {
+        if (step1ans != "") {
+          document.getElementById(step1ans).classList.remove('is-selected')
+        }
+        step1ans = elem.innerHTML;
+      } else if (step == 2) {
+        if (step2ans != "") {
+          document.getElementById(step2ans).classList.remove('is-selected')
+        }
+        step2ans = elem.innerHTML;
+      }
+    }
+
+    var handleMultiSelect = function (elem) {
+      elem.classList.toggle('is-selected');
+      //step4ans.push(elem.)
+    }
 
     var handleSteps = function (change) {
       let newStep = currStep + change;
@@ -134,7 +164,6 @@
         } else {
           currStep--
         }
-
       }
     }
 
