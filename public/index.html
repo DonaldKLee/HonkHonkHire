@@ -7,8 +7,14 @@
 </head>
 <body>
     <div>
-        <h3>Hello, world!</h3>
+        <h3>Webcam</h3>
         <webcam-vid id="webcamVid"></webcam-vid>
+
+        <h3>Upload a pdf of your resume file or it's text (later) so we can generate questions for you!</h3>
+        <form action="/uploadResume" method="post">
+            <input type="file" name="resume" accept=".pdf"/>
+            <input type="submit" id="submitPDF" />
+        </form>
     </div>
     <script src="components/webcamVid.js"></script>
 </body>
