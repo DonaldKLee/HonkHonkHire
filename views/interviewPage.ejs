@@ -1,86 +1,93 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interview Page</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/interviewPage.css">
-
-  <!-- You can replace JSDeliver with another CDN if you prefer to -->
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Capture</title>
 </head>
-
 <body>
-  <div>
-    <h3>Webcam</h3>
-    <div class="video-container">
-      <video id="webcam"></video>
-    </div>
-  </div>
-  <script>
-    window.onload = function () {
-      let All_mediaDevices = navigator.mediaDevices;
-      if (!All_mediaDevices || !All_mediaDevices.getUserMedia) {
-        console.log("getUserMedia() not supported.");
-        return;
-      }
-      All_mediaDevices.getUserMedia({
-        audio: true,
-        video: true,
-      })
-        .then(function (vidStream) {
-          var video = document.getElementById("webcam");
-          if ("srcObject" in video) {
-            video.srcObject = vidStream;
-          } else {
-            video.src = window.URL.createObjectURL(vidStream);
-          }
-          video.onloadedmetadata = function (e) {
-            video.play();
-          };
-        })
-        .catch(function (e) {
-          console.log(e.name + ": " + e.message);
+    <h1>Camera Capture</h1>
+    <button id="captureButton">Capture Image</button>
+    <video id="videoElement" autoplay></video>
+    <canvas id="canvasElement"></canvas>
+    <img id="capturedImage" style="display: none;">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+    <script>
+        const captureButton = document.getElementById('captureButton');
+        const videoElement = document.getElementById('videoElement');
+        const canvasElement = document.getElementById('canvasElement');
+        const capturedImage = document.getElementById('capturedImage');
+
+        // Access the user's camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                videoElement.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing camera:', error);
+            });
+
+            function dataURLtoBlob(dataURL) {
+              const parts = dataURL.split(',');
+              const contentType = parts[0].split(':')[1];
+              const byteString = atob(parts[1]);
+
+              const arrayBuffer = new ArrayBuffer(byteString.length);
+              const uint8Array = new Uint8Array(arrayBuffer);
+
+              for (let i = 0; i < byteString.length; i++) {
+                uint8Array[i] = byteString.charCodeAt(i);
+              }
+
+              return new Blob([uint8Array], { type: contentType });
+            }
+
+        // Handle the button click to capture an image
+        captureButton.addEventListener('click', () => {
+            // Create a canvas to draw the video frame
+            const context = canvasElement.getContext('2d');
+            context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+
+            // Capture the current frame as an image
+            const imageDataURL = canvasElement.toDataURL('image/png');
+            
+            const firebaseConfig = {
+              apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+              authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+              projectId: "hackthenorth-ed2fa",
+              storageBucket: "hackthenorth-ed2fa.appspot.com",
+              messagingSenderId: "95447128297",
+              appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+              measurementId: "G-K1TGR981FM"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+
+            const fileName = `image_${Date.now()}.png`;
+            const ref = firebase.storage().ref();
+            const blob = dataURLtoBlob(imageDataURL);
+
+            // Upload the Blob to Firebase Storage
+            const task = ref.child(fileName).put(blob);
+
+            task
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+                console.log(url);
+                fetch(`/quiz/detectFace?f=${url}`, {
+                    method: 'GET',
+                }).then((resp) => {
+                    return resp.json();
+                }).then((data) => {
+                    console.log(data);
+                }).catch((error) => {
+                    console.error('Error:', error);
+                });
+            })
+            .catch(err => console.log(err))
         });
-    };
-
-  //   async function activateCamera() {
-  //     const vision = await FilesetResolver.forVisionTasks(
-  //       // path/to/wasm/root
-  //       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
-  //     );
-  //     const faceLandmarker = await faceLandmarker.createFromOptions(
-  //         vision,
-  //         {
-  //           baseOptions: {
-  //             modelAssetPath: "../public/models/face_landmarker.task"
-  //           },
-  //           runningMode: runningMode
-  //         });
-
-  //         await faceLandmarker.setOptions({ runningMode: "VIDEO" });
-
-
-  //         let lastVideoTime = -1;
-  //         function renderLoop() {
-  //           const video = document.getElementById("webcam");
-
-  //           if (video.currentTime !== lastVideoTime) {
-  //             const faceLandmarkerResult = faceLandmarker.detectForVideo(video);
-  //             processResults(detections);
-  //             lastVideoTime = video.currentTime;
-  //           }
-
-  //           requestAnimationFrame(() => {
-  //             renderLoop();
-  //           });
-  //         }
-  //       }
-
-  //       activateCamera();
-  </script>
+    </script>
 </body>
-
 </html>
