@@ -35,6 +35,13 @@ app.get('/audio', (req, res) => {
     })
 });
 
+
+app.get('/uploadResume', (req, res) => {
+  const pdf = req.query.a;
+  console.log(pdf);
+  res.render('interview.ejs');
+})
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
