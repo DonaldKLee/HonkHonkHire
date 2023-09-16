@@ -6,6 +6,10 @@
   <title>Interview Page</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/interviewPage.css">
+
+  <!-- You can replace JSDeliver with another CDN if you prefer to -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -42,6 +46,40 @@
         });
     };
 
+  //   async function activateCamera() {
+  //     const vision = await FilesetResolver.forVisionTasks(
+  //       // path/to/wasm/root
+  //       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+  //     );
+  //     const faceLandmarker = await faceLandmarker.createFromOptions(
+  //         vision,
+  //         {
+  //           baseOptions: {
+  //             modelAssetPath: "../public/models/face_landmarker.task"
+  //           },
+  //           runningMode: runningMode
+  //         });
+
+  //         await faceLandmarker.setOptions({ runningMode: "VIDEO" });
+
+
+  //         let lastVideoTime = -1;
+  //         function renderLoop() {
+  //           const video = document.getElementById("webcam");
+
+  //           if (video.currentTime !== lastVideoTime) {
+  //             const faceLandmarkerResult = faceLandmarker.detectForVideo(video);
+  //             processResults(detections);
+  //             lastVideoTime = video.currentTime;
+  //           }
+
+  //           requestAnimationFrame(() => {
+  //             renderLoop();
+  //           });
+  //         }
+  //       }
+
+  //       activateCamera();
   </script>
 </body>
 
