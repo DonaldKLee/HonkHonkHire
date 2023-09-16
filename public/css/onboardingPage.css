@@ -11,12 +11,13 @@ html {
 .logo {
   align-self: center;
   width: 60px;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
 }
 
 .progressbar {
   align-self: center;
   width: 70vw;
+  height: 10vw;
   margin-bottom: 60px;
 }
 
@@ -82,14 +83,94 @@ html {
 
 .next-button {
   padding: 12px 24px;
-  border-width: 1.7px;
-  border-style: solid;
+  border-width: 0px;
   background-color: #805AD5;
   border-radius: 10px;
   font-size: 24px;
   font-weight: 600;
   color: white;
   cursor: pointer;
+}
+
+.expInputs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+label {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin-right: 40px;
+}
+
+#resumeBtn {
+  margin-left: 7px;
+  padding: 6px 20px;
+  border-width: 0px;
+  background-color: #EDF2F2;
+  border-radius: 10px;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#linkedinInput,
+#portfolioInput {
+  width: 50vw;
+  height: 32px;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  border-width: 0px;
+  border-radius: 4px;
+  padding-left: 4px;
+  background-color: #EDF2F2;
+}
+
+.bg {
+  position: absolute;
+  width: 50vh;
+  margin: 0;
+  z-index: -1;
+  border-width: 2pxd;
+}
+
+#getStarted {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  margin-bottom: 24px;
+}
+
+#access {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  margin-bottom: 60px;
+}
+
+#readyBtn {
+  display: inline;
+  width: 150px;
+  padding: 12px 12px;
+  border-width: 1.7px;
+  border-style: solid;
+  border-color: #319795;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #319795;
+  background-color: white;
+  cursor: pointer;
+}
+
+#readyBtn:hover {
+  background-color: #319795;
+  color: white;
 }
 
 .toggle-content {

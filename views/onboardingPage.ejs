@@ -16,8 +16,7 @@
 <body>
   <div>
     <div class="step toggle-content is-visible" id="step0">
-      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
-      <img class="progressbar" src="assets/progress1.svg" alt="progress1" />
+      <img class="progressbar" src="assets/progress1.svg" alt="progress1" style="margin-top: 2px;" />
       <div class="question">
         <h1>What industry do you work in?</h1>
       </div>
@@ -36,12 +35,11 @@
       </div>
     </div>
     <div class="step toggle-content" id="step1">
-      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
       <img class="progressbar" src="assets/progress2.svg" alt="progress2" />
       <div class="question">
         <h1>What role are you applying for?</h1>
       </div>
-      <div class="chips">
+      <div class="chips"  style="margin-bottom: 82px;">
         <button class="chip" onclick="handleSingleSelect(this, 1)" id="Product Designer">Product Designer</button>
         <button class="chip" onclick="handleSingleSelect(this, 1)" id="Product Manager">Product Manager</button>
         <button class="chip" onclick="handleSingleSelect(this, 1)" id="QA">QA</button>
@@ -56,14 +54,13 @@
       </div>
     </div>
     <div class="step toggle-content" id="step2">
-      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
       <img class="progressbar" src="assets/progress3.svg" alt="progress3" />
-      <div class="question" style="margin-bottom: 40px;">
+      <div class="question" style="margin-bottom: 34px;">
         <h1>What is your level of experience?</h1>
         <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
           we're evaluating your performance relative to your peers.</h2>
       </div>
-      <div class="chips" style="margin-bottom: 112px;">
+      <div class="chips" style="margin-bottom: 115px;">
         <button class="chip" onclick="handleSingleSelect(this, 2)" id="Entry"><span
             style="align-self: center;">Entry</span><span
             style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">Less than 3 years of work
@@ -84,12 +81,11 @@
       </div>
     </div>
     <div class="step toggle-content" id="step3">
-      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
       <img class="progressbar" src="assets/progress4.svg" alt="progress4" />
       <div class="question">
         <h1>What areas are you most interested in improving?</h1>
       </div>
-      <div class="chips" style="margin-bottom: 28px;">
+      <div class="chips" style="margin-bottom: 34px;">
         <button class="chip" onclick="handleSingleSelect(this)">Being more concise</button>
         <button class="chip" onclick="handleSingleSelect(this)">Less filler words</button>
         <button class="chip" onclick="handleSingleSelect(this)">Confidence</button>
@@ -103,39 +99,44 @@
       </div>
     </div>
     <div class="step toggle-content" id="step4">
-      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
       <img class="progressbar" src="assets/progress5.svg" alt="progress5" />
       <div class="question">
         <h1>Add your personal experience</h1>
-        <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
-          to receive questions tailored specifically for you.</h2>
+        <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">to receive questions tailored specifically for you.</h2>
       </div>
 
-      <label><b>Resume</b></label>
-      <input type="file" id="resumeInput" name="resume" accept=".pdf" />
-      <!-- <button type="button" onclick="submitPDF()" id="submitPDF">Submit</button> -->
+      <div class="expInputs">
+        <label><b>Resume</b></label>
+        <button id="resumeBtn" onclick="document.getElementById('resumeInput').click()">Upload</button>
+        <input type='file' id="resumeInput" style="display:none" name="resume" accept=".pdf">
+        <!-- <button type="button" onclick="submitPDF()" id="submitPDF">Submit</button> -->
+      </div>
+      <div class="expInputs">
+        <label><b>LinkedIn</b></label>
+        <input type="text" id="linkedinInput" name="linkedin" />
+      </div>
+      <div class="expInputs">
+        <label><b>Portfolio</b></label>
+        <input type="text" id="portfolioInput" name="portfolio" />
+      </div>
 
-      <div class="buttons">
+      <div class="buttons" style="margin-top: 12px;">
         <button class="back-button" onclick="handleSteps(-1)">Back</button>
         <button class="next-button" onclick="handleSteps(1)">Next</button>
       </div>
     </div>
 
-    <div class="step toggle-content" id="step5">
-      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
-      <img class="progressbar" src="assets/progress5.svg" alt="progress5" />
-      <div class="question">
-        <h1>Let's get started!</h1>
-        <p>In the next step, you will need to give us access to your microphone and camera!</p>
-        <!-- Submits the form and pdf to Node.js -->
-        <button>I'm ready!</button>
-      </div>
+    <div class="step toggle-content" id="step5" style="align-items: center; margin: 5vh 10vw;">
+      <img src="/assets/step5bgtr.svg" alt="background" class="bg" style="right: 0; top: 0;">
+      <img src="/assets/step5bgbl.svg" alt="background" class="bg" style="bottom: 0; left: 0;">
 
-      <div class="buttons">
-        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+      <div class="step" style="align-items: center;">
+        <img class="logo" src="/assets/logogoose.svg" alt="logo">
+        <h1 id="getStarted">Let's get started!</h1>
+        <h2 id="access">Enable microphone and camera access</h1>
+        <button id="readyBtn" onclick="finishOnboarding()">I'm ready!</button>
       </div>
     </div>
-
   </div>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -240,6 +241,11 @@
     var toggleVisibility = function (elem) {
       elem.classList.toggle('is-visible');
     };
+
+    var finishOnboarding = function () {
+      // Send data to backend
+      window.location.href = "/interview"
+    }
   </script>
 
 </body>
