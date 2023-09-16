@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interview Page</title>
 </head>
+
 <body>
   <div>
     <h3>Webcam</h3>
@@ -13,31 +15,32 @@
   </div>
   <script>
     window.onload = function () {
-	let All_mediaDevices = navigator.mediaDevices;
-	if (!All_mediaDevices || !All_mediaDevices.getUserMedia) {
-		console.log("getUserMedia() not supported.");
-		return;
-	}
-	All_mediaDevices.getUserMedia({
-		audio: true,
-		video: true,
-	})
-		.then(function (vidStream) {
-			var video = document.getElementById("webcam");
-			if ("srcObject" in video) {
-				video.srcObject = vidStream;
-			} else {
-				video.src = window.URL.createObjectURL(vidStream);
-			}
-			video.onloadedmetadata = function (e) {
-				video.play();
-			};
-		})
-		.catch(function (e) {
-			console.log(e.name + ": " + e.message);
-		});
-};
+      let All_mediaDevices = navigator.mediaDevices;
+      if (!All_mediaDevices || !All_mediaDevices.getUserMedia) {
+        console.log("getUserMedia() not supported.");
+        return;
+      }
+      All_mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      })
+        .then(function (vidStream) {
+          var video = document.getElementById("webcam");
+          if ("srcObject" in video) {
+            video.srcObject = vidStream;
+          } else {
+            video.src = window.URL.createObjectURL(vidStream);
+          }
+          video.onloadedmetadata = function (e) {
+            video.play();
+          };
+        })
+        .catch(function (e) {
+          console.log(e.name + ": " + e.message);
+        });
+    };
 
   </script>
 </body>
+
 </html>

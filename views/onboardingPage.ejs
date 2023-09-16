@@ -1,11 +1,28 @@
 <!DOCTYPE html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Onboarding Page</title>
 </head>
+
 <body>
   <div>
+    <div>
+      Step 1
+    </div>
+    <div>
+      Step 2
+    </div>
+    <div>
+      Step 3
+    </div>
+    <div>
+      Step 4
+    </div>
+    <div>
+      Step 5
+    </div>
     <h3>
       Upload a pdf of your resume file or it's text (later) so we can generate
       questions for you!
@@ -15,7 +32,31 @@
       <input type="submit" id="submitPDF" />
     </form>
   </div>
+  <script>
+    // Show an element
+    var show = function (elem) {
+      elem.style.display = 'block';
+    };
+
+    // Hide an element
+    var hide = function (elem) {
+      elem.style.display = 'none';
+    };
+
+    // Toggle element visibility
+    var toggle = function (elem) {
+
+      // If the element is visible, hide it
+      if (window.getComputedStyle(elem).display === 'block') {
+        hide(elem);
+        return;
+      }
+
+      // Otherwise, show it
+      show(elem);
+
+    };
+  </script>
 </body>
+
 </html>
-
-
