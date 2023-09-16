@@ -5,11 +5,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Audio Recorder</title>
 	</head>
-
 	<body>
+		<!-- <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script> -->
+
 		<button id="startRecording">Start Recording</button>
 		<button id="stopRecording">Stop Recording</button>
 		<a id="downloadLink" style="display: none">Download Audio</a>
+
+		<h3>
+			Upload a pdf of your resume file or it's text (later) so we can generate
+			questions for you!
+		</h3>
+
+		<input type="file" id="resumeInput" name="resume" accept=".pdf" />
+		<button type="button" onclick="submitPDF()" id="submitPDF">Submit</button>
 
 		<!-- The core Firebase JS SDK is always required and must be listed first -->
 		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
@@ -23,19 +32,6 @@
 
 			startRecordingButton.addEventListener("click", startRecording);
 			stopRecordingButton.addEventListener("click", stopRecording);
-
-			const firebaseConfig = {
-				apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
-				authDomain: "hackthenorth-ed2fa.firebaseapp.com",
-				projectId: "hackthenorth-ed2fa",
-				storageBucket: "hackthenorth-ed2fa.appspot.com",
-				messagingSenderId: "95447128297",
-				appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
-				measurementId: "G-K1TGR981FM",
-			};
-
-			// Initialize Firebase
-			firebase.initializeApp(firebaseConfig);
 
 			async function startRecording() {
 				try {
@@ -51,34 +47,17 @@
 						}
 					};
 
-					mediaRecorder.onstop = () => {
+					mediaRecorder.onstop = async () => {
 						const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-						const ref = firebase.storage().ref();
-						const file = audioBlob;
-						const name = `${new Date()}-audio.wav`;
-						const metadata = {
-							contentType: "audio/wav",
-						};
-						const task = ref.child(name).put(file, metadata);
+						console.log(audioBlob);
+						const formData = new FormData();
+						formData.append("audio", audioBlob, "recording.wav");
 
-						task
-							.then((snapshot) => snapshot.ref.getDownloadURL())
-							.then((url) => {
-								console.log(url);
-								fetch(`/audio?a=${url}`, {
-									method: "GET",
-								})
-									.then((resp) => {
-										return resp.json();
-									})
-									.then((data) => {
-										console.log(data);
-									})
-									.catch((error) => {
-										console.error("Error:", error);
-									});
-							})
-							.catch((err) => console.log(err));
+						fetch("/upload-audio", {
+							method: "POST",
+							body: formData,
+						});
+
 						downloadLink.style.display = "block";
 					};
 
@@ -100,5 +79,65 @@
 				}
 			}
 		</script>
+
+		<script>
+			function submitPDF() {
+				resumeFile = document.getElementById("resumeInput").files[0];
+
+				const firebaseConfig = {
+					apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+					authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+					projectId: "hackthenorth-ed2fa",
+					storageBucket: "hackthenorth-ed2fa.appspot.com",
+					messagingSenderId: "95447128297",
+					appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+					measurementId: "G-K1TGR981FM",
+				};
+
+				firebase.initializeApp(firebaseConfig);
+
+				const ref = firebase.storage().ref();
+				const name = `${new Date()}-${resumeFile.name}`;
+				const metadata = {
+					contentType: resumeFile.type,
+				};
+				const pdfFile = ref.child(name).put(resumeFile, metadata);
+
+				pdfFile
+					.then((snapshot) => snapshot.ref.getDownloadURL())
+					.then((url) => {
+						console.log(url);
+						fetch(`/quiz/uploadResume?r=${url}`, {
+							method: "GET",
+						})
+							.then((resp) => {
+								return resp.json();
+							})
+							.then((data) => {
+								console.log(data);
+							})
+							.catch((error) => {
+								console.error("Error:", error);
+							});
+					})
+					.catch((err) => console.log(err));
+				downloadLink.style.display = "block";
+			}
+		</script>
 	</body>
 </html>
+
+<!-- <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+    function getResumeText(resumePath) {
+        var pdf = pdfjsLib.getDocument(resumePath);
+        console.log(pdf)
+    }
+
+    function getPDFFile() {
+        resumePath = document.getElementById("resumeInput").value;
+        resumeText = getResumeText(resumePath);
+        // console.log(resumeText);
+    }
+</script> -->
