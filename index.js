@@ -1,20 +1,42 @@
 const express = require('express');
-const path = require('path');
 const app = express();
+const session = require('express-session');
+// const WebSocket = require('ws');
+const recorder = require('node-record-lpcm16');
+const speech = require('@google-cloud/speech');
+const client = new speech.SpeechClient();
+require('dotenv').config();
+  
+app.use(express.static(__dirname + '/public'));
+app.set('views', (__dirname + '/views'))
+app.set('view engine', 'ejs');
+app.use(
+    session({
+        secret : 'yoyohoneysingh',
+        cookie : {
+            maxAge : 60000 * 60 * 24
+        },
+        saveUninitialized : true,
+        resave : false
+    })
+)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', async(req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/', (req, res) => {
+    res.render('index.ejs');
 });
 
-app.post('/uploadResume', (req, res) => {
-  // const { pdfFile } = req.body.resume;
-  const pdfFile = req;
-  console.log(pdfFile);
-  res.sendFile(path.join(__dirname, 'public', 'interview.html'));
-})
+app.get('/audio', (req, res) => {
+    const audioUrl = req.query.a;
+    console.log(audioUrl);
+    res.json({
+        success: true
+    })
+});
 
-app.listen(8080, () => {
-    console.log("Server successfully running on port 8080");
-  });
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server successfully running on port ${PORT}`);
+});
