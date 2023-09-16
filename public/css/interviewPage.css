@@ -1,8 +1,16 @@
-#webcam {
-  width: 630px;
-  height: 300px;
+html {
+  background-color: #141F1F;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#videoElement {
+  height: 70vh;
   margin-left: 0px;
-  border: 3px solid #ccc;
-  background: black;
+  background: #141F1F;
   transform: scaleX(-1);
 }
