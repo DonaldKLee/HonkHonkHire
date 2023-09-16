@@ -4,57 +4,142 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Onboarding Page</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/onboardingPage.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
   <div>
-    <div>
-      Step 1
+    <div class="step toggle-content is-visible" id="step0">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress1.svg" alt="progress1" />
+      <div class="question">
+        <h1>What industry do you work in?</h1>
+      </div>
+      <div class="chips">
+        <button class="chip">Tech</button>
+        <button class="chip">Customer Service</button>
+        <button class="chip">Education</button>
+        <button class="chip">Healthcare</button>
+        <button class="chip">Retail</button>
+        <button class="chip">Consulting</button>
+        <button class="chip">Other</button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
     </div>
-    <div>
-      Step 2
+    <div class="step toggle-content" id="step1">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress2.svg" alt="progress1" />
+      <div class="question">
+        <h1>What role are you applying for?</h1>
+      </div>
+      <div class="chips">
+        <button class="chip">Product Designer</button>
+        <button class="chip">Product Manager</button>
+        <button class="chip">QA</button>
+        <button class="chip">Marketing</button>
+        <button class="chip">Software Engineer</button>
+        <button class="chip">Human Resources</button>
+        <button class="chip">Other</button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
     </div>
-    <div>
-      Step 3
+    <div class="step toggle-content" id="step2">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress3.svg" alt="progress1" />
+      <div class="question" style="margin-bottom: 32px;">
+        <h1>What is your level of experience?</h1>
+        <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
+          we're evaluating your performance relative to your peers.</h2>
+      </div>
+      <div class="chips" style="margin-bottom: 112px;">
+        <button class="chip"><span style="align-self: center;">Entry</span><span
+            style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">Less than 3 years of work
+            experience
+          </span></button>
+        <button class="chip"><span style="align-self: center;">Intermediate</span><span
+            style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">3-8 years of work experience
+          </span></button>
+        <button class="chip"><span style="align-self: center;">Senior</span><span
+            style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">8+ years of work experience
+          </span></button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
     </div>
-    <div>
-      Step 4
+    <div class="step toggle-content" id="step3">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress4.svg" alt="progress1" />
+      <div class="question">
+        <h1>What areas are you most interested in improving?</h1>
+      </div>
+      <div class="chips" style="margin-bottom: 28px;">
+        <button class="chip">Being more concise</button>
+        <button class="chip">Less filler words</button>
+        <button class="chip">Confidence</button>
+        <button class="chip">Increasing eye-contact</button>
+        <button class="chip">Speaking slower</button>
+        <button class="chip">Other</button>
+      </div>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
     </div>
-    <div>
-      Step 5
+    <div class="step toggle-content" id="step4">
+      <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
+      <img class="progressbar" src="assets/progress5.svg" alt="progress1" />
+      <div class="question">
+        <h1>Add your personal experience</h1>
+        <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">This information helps ensure
+          to receive questions tailored specifically for you.</h2>
+      </div>
+      <form action="/uploadResume" method="post">
+        <input type="file" name="resume" accept=".pdf" />
+        <input type="submit" id="submitPDF" />
+      </form>
+      <div class="buttons">
+        <button class="back-button" onclick="handleSteps(-1)">Back</button>
+        <button class="next-button" onclick="handleSteps(1)">Next</button>
+      </div>
     </div>
-    <h3>
-      Upload a pdf of your resume file or it's text (later) so we can generate
-      questions for you!
-    </h3>
-    <form action="/uploadResume" method="post">
-      <input type="file" name="resume" accept=".pdf" />
-      <input type="submit" id="submitPDF" />
-    </form>
   </div>
   <script>
-    // Show an element
-    var show = function (elem) {
-      elem.style.display = 'block';
-    };
+    var currStep = 0;
 
-    // Hide an element
-    var hide = function (elem) {
-      elem.style.display = 'none';
-    };
+    var handleSteps = function (change) {
+      let newStep = currStep + change;
+      if (newStep < 0) {
+        // do nothing
+      } else if (newStep > 4) {
+        // navigate to let's get started page aka.interviewPage?
+      } else {
+        document.getElementById(`step${currStep}`).classList.remove('is-visible')
+        document.getElementById(`step${newStep}`).classList.add('is-visible');
+        if (change > 0) {
+          currStep++
+        } else {
+          currStep--
+        }
 
-    // Toggle element visibility
-    var toggle = function (elem) {
-
-      // If the element is visible, hide it
-      if (window.getComputedStyle(elem).display === 'block') {
-        hide(elem);
-        return;
       }
+    }
 
-      // Otherwise, show it
-      show(elem);
-
+    var toggleVisibility = function (elem) {
+      elem.classList.toggle('is-visible');
     };
   </script>
 </body>
