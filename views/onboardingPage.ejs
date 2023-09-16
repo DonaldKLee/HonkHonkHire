@@ -124,9 +124,9 @@
       <img class="progressbar" src="assets/progress5.svg" alt="progress5" />
       <div class="question">
         <h1>Let's get started!</h1>
-        <p>In the next step, you will need to give us access to your microphone and camera!</p>
+        <h2 style="font-size: 16px; color: #707070; font-weight: 500; margin-top: 8px;">In the next step, you will need to give us access to your microphone and camera!</h2>
         <!-- Submits the form and pdf to Node.js -->
-        <button>I'm ready!</button>
+        <button onclick="submitOnboarding()">I'm ready!</button>
       </div>
       
 
@@ -143,45 +143,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
 
   <script>
-        function submitPDF() {
-        resumeFile = document.getElementById("resumeInput").files[0];
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
-            authDomain: "hackthenorth-ed2fa.firebaseapp.com",
-            projectId: "hackthenorth-ed2fa",
-            storageBucket: "hackthenorth-ed2fa.appspot.com",
-            messagingSenderId: "95447128297",
-            appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
-            measurementId: "G-K1TGR981FM"
-            };
-
-        firebase.initializeApp(firebaseConfig);
-
-        const ref = firebase.storage().ref();
-        const name = `${new Date}-${resumeFile.name}`
-        const metadata = {
-            contentType : resumeFile.type
-        }
-        const pdfFile = ref.child(name).put(resumeFile, metadata)
-
-        pdfFile
-        .then(snapshot => snapshot.ref.getDownloadURL())
-        .then(url => {
-            console.log(url);
-            fetch(`/quiz/uploadResume?r=${url}`, {
-                method: 'GET',
-            }).then((resp) => {
-                return resp.json();
-            }).then((data) => {
-                console.log(data);
-            }).catch((error) => {
-                console.error('Error:', error);
-            });
-        })
-        .catch(err => console.log(err))
-    };
-
     var currStep = 0;
     var step0ans = ""
     var step1ans = ""
@@ -232,7 +193,49 @@
     var toggleVisibility = function (elem) {
       elem.classList.toggle('is-visible');
     };
+
+    function submitOnboarding() {
+      // submits pdf
+      resumeFile = document.getElementById("resumeInput").files[0];
+      console.log(step0ans, step1ans, step2ans, step3ans, step4ans, resumeFile);
+
+      return;
+      const firebaseConfig = {
+          apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+          authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+          projectId: "hackthenorth-ed2fa",
+          storageBucket: "hackthenorth-ed2fa.appspot.com",
+          messagingSenderId: "95447128297",
+          appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+          measurementId: "G-K1TGR981FM"
+          };
+
+      firebase.initializeApp(firebaseConfig);
+
+      const ref = firebase.storage().ref();
+      const name = `${new Date}-${resumeFile.name}`
+      const metadata = {
+          contentType : resumeFile.type
+      }
+      const pdfFile = ref.child(name).put(resumeFile, metadata)
+
+      pdfFile
+      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => {
+          console.log(url);
+          fetch(`/quiz/uploadResume?r=${url}`, {
+              method: 'GET',
+          }).then((resp) => {
+              return resp.json();
+          }).then((data) => {
+              console.log(data);
+          }).catch((error) => {
+              console.error('Error:', error);
+          });
+      }).catch(err => console.log(err))
+    }
   </script>
+
 
 </body>
 
