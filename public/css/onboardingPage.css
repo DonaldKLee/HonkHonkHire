@@ -117,6 +117,13 @@ label {
   cursor: pointer;
 }
 
+#filename {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 20px;
+}
+
 #linkedinInput,
 #portfolioInput {
   width: 50vw;

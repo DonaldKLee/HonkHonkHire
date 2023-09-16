@@ -108,7 +108,9 @@
       <div class="expInputs">
         <label><b>Resume</b></label>
         <button id="resumeBtn" onclick="document.getElementById('resumeInput').click()">Upload</button>
-        <input type='file' id="resumeInput" style="display:none" name="resume" accept=".pdf">
+        <input type='file' id="resumeInput" style="display:none" name="resume" accept=".pdf" onchange="document.getElementById('filename').innerHTML = document.getElementById('resumeInput').files[0].name;
+      ">
+        <h3 id="filename">No file chosen.</h3>
         <!-- <button type="button" onclick="submitPDF()" id="submitPDF">Submit</button> -->
       </div>
       <div class="expInputs">
