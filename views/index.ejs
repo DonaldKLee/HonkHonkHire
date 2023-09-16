@@ -96,7 +96,7 @@
         const metadata = {
             contentType : resumeFile.type
         }
-        const pdfFile = ref.child(name).put(resumeFile.name, metadata)
+        const pdfFile = ref.child(name).put(resumeFile, metadata)
 
         pdfFile
         .then(snapshot => snapshot.ref.getDownloadURL())
