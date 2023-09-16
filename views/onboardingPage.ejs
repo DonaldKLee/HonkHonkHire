@@ -85,13 +85,13 @@
       <div class="question">
         <h1>What areas are you most interested in improving?</h1>
       </div>
-      <div class="chips" style="margin-bottom: 34px;">
-        <button class="chip" onclick="handleSingleSelect(this)">Being more concise</button>
-        <button class="chip" onclick="handleSingleSelect(this)">Less filler words</button>
-        <button class="chip" onclick="handleSingleSelect(this)">Confidence</button>
-        <button class="chip" onclick="handleSingleSelect(this)">Increasing eye-contact</button>
-        <button class="chip" onclick="handleSingleSelect(this)">Speaking slower</button>
-        <button class="chip" onclick="handleSingleSelect(this)">Other</button>
+      <div class="chips" style="margin-bottom: 28px;">
+        <button class="chip" onclick="handleMultiSelect(this)">Being more concise</button>
+        <button class="chip" onclick="handleMultiSelect(this)">Less filler words</button>
+        <button class="chip" onclick="handleMultiSelect(this)">Confidence</button>
+        <button class="chip" onclick="handleMultiSelect(this)">Increasing eye-contact</button>
+        <button class="chip" onclick="handleMultiSelect(this)">Speaking slower</button>
+        <button class="chip" onclick="handleMultiSelect(this)">Other</button>
       </div>
       <div class="buttons">
         <button class="back-button" onclick="handleSteps(-1)">Back</button>
@@ -134,7 +134,7 @@
         <img class="logo" src="/assets/logogoose.svg" alt="logo">
         <h1 id="getStarted">Let's get started!</h1>
         <h2 id="access">Enable microphone and camera access</h1>
-        <button id="readyBtn" onclick="finishOnboarding()">I'm ready!</button>
+        <button id="readyBtn" onclick="submitOnboarding()">I'm ready!</button>
       </div>
     </div>
   </div>
@@ -144,8 +144,10 @@
   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
 
   <script>
-    function submitPDF() {
+    function submitOnboarding() {
       resumeFile = document.getElementById("resumeInput").files[0];
+
+      console.log(step0ans, step1ans, step2ans, step3ans, resumeFile.name);
 
       const firebaseConfig = {
         apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
@@ -170,7 +172,7 @@
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then(url => {
           console.log(url);
-          fetch(`/quiz/uploadResume?r=${url}`, {
+          fetch(`/quiz/uploadResume?r=${url}&ans0=${step0ans}&ans1=${step1ans}&ans2=${step2ans}&ans3=${step3ans}`, {
             method: 'GET',
           }).then((resp) => {
             return resp.json();
@@ -181,6 +183,8 @@
           });
         })
         .catch(err => console.log(err))
+
+        window.location.href = "/interview"
     };
 
     var currStep = 0;
@@ -211,11 +215,11 @@
     }
 
     var handleMultiSelect = function (elem) {
-      elem.classList.toggle('is-selected');
-      if (step3ans.includes(elem.id)) {
-        step3ans.filter((i) => i != elem.id)
+      elem.classList.toggle('is-selected')
+      if (step3ans.includes(elem.innerHTML)) {
+        step3ans.filter((i) => i != elem.innerHTML)
       } else {
-        step3ans.push(elem.id)
+        step3ans.push(elem.innerHTML)
       }
     }
 
@@ -241,11 +245,6 @@
     var toggleVisibility = function (elem) {
       elem.classList.toggle('is-visible');
     };
-
-    var finishOnboarding = function () {
-      // Send data to backend
-      window.location.href = "/interview"
-    }
   </script>
 
 </body>
