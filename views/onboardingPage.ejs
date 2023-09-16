@@ -64,14 +64,14 @@
           we're evaluating your performance relative to your peers.</h2>
       </div>
       <div class="chips" style="margin-bottom: 112px;">
-        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Entry">Entry</span><span
+        <button class="chip" onclick="handleSingleSelect(this, 2)" id="Entry"><span style="align-self: center;">Entry</span><span
             style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">Less than 3 years of work
             experience
           </span></button>
-        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Intermediate">Intermediate</span><span
+        <button class="chip" onclick="handleSingleSelect(this, 2)" id="Intermediate"><span style="align-self: center;">Intermediate</span><span
             style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">3-8 years of work experience
           </span></button>
-        <button class="chip"><span style="align-self: center;" onclick="handleSingleSelect(this, 2)" id="Senior">Senior</span><span
+        <button class="chip" onclick="handleSingleSelect(this, 2)" id="Senior"><span style="align-self: center;">Senior</span><span
             style="font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 600;">8+ years of work experience
           </span></button>
       </div>
@@ -87,12 +87,12 @@
         <h1>What areas are you most interested in improving?</h1>
       </div>
       <div class="chips" style="margin-bottom: 28px;">
-        <button class="chip">Being more concise</button>
-        <button class="chip">Less filler words</button>
-        <button class="chip">Confidence</button>
-        <button class="chip">Increasing eye-contact</button>
-        <button class="chip">Speaking slower</button>
-        <button class="chip">Other</button>
+        <button class="chip" onclick="handleSingleSelect(this)">Being more concise</button>
+        <button class="chip" onclick="handleSingleSelect(this)">Less filler words</button>
+        <button class="chip" onclick="handleSingleSelect(this)">Confidence</button>
+        <button class="chip" onclick="handleSingleSelect(this)">Increasing eye-contact</button>
+        <button class="chip" onclick="handleSingleSelect(this)">Speaking slower</button>
+        <button class="chip" onclick="handleSingleSelect(this)">Other</button>
       </div>
       <div class="buttons">
         <button class="back-button" onclick="handleSteps(-1)">Back</button>
@@ -118,7 +118,6 @@
       </div>
     </div>
 
-
     <div class="step toggle-content" id="step5">
       <img class="logo" src="assets/placeholder.svg" alt="placeholder logo" />
       <img class="progressbar" src="assets/progress5.svg" alt="progress5" />
@@ -129,8 +128,6 @@
         <button onclick="submitOnboarding()">I'm ready!</button>
       </div>
       
-
-
       <div class="buttons">
         <button class="back-button" onclick="handleSteps(-1)">Back</button>
       </div>
@@ -156,30 +153,32 @@
         if (step0ans != "") {
           document.getElementById(step0ans).classList.remove('is-selected')
         }
-        step0ans = elem.innerHTML;
+        step0ans = elem.id;
       } else if (step == 1) {
         if (step1ans != "") {
           document.getElementById(step1ans).classList.remove('is-selected')
         }
-        step1ans = elem.innerHTML;
+        step1ans = elem.id;
       } else if (step == 2) {
         if (step2ans != "") {
           document.getElementById(step2ans).classList.remove('is-selected')
         }
-        step2ans = elem.innerHTML;
+        step2ans = elem.id;
       }
     }
 
     var handleMultiSelect = function (elem) {
       elem.classList.toggle('is-selected');
-      //step4ans.push(elem.)
+      if (step4ans.includes(elem.id)) {
+        step4ans.filter((i) => i != elem.id)
+      } else {
+        step4ans.push(elem.id)
+      }
     }
 
     var handleSteps = function (change) {
       let newStep = currStep + change;
-      if (newStep < 0) {
-        // do nothing
-      } else {
+  
         document.getElementById(`step${currStep}`).classList.remove('is-visible')
         document.getElementById(`step${newStep}`).classList.add('is-visible');
         if (change > 0) {
@@ -187,7 +186,7 @@
         } else {
           currStep--
         }
-      }
+      
     }
 
     var toggleVisibility = function (elem) {
