@@ -139,3 +139,22 @@ html {
   border-style: solid;
   font-size: 20px;
 }
+
+#loading {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  top: 0;
+  z-index: 2;
+}
+
+.gooseGifLoad {
+  display: block;
+  margin: 0 auto;
+}
+
+.loadText {
+  font-size: 1.5em;
+  text-align: center;
+}
