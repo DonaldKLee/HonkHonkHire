@@ -64,12 +64,14 @@ app.get("/newInterview", (req, res) => {
 	.catch(err => console.log(err));
 });
 
+
 app.get("/interview", (req, res) => {
-	Users.findOne({email: req.session.user.email})
-	.then(user => {
-		res.render("interviewPage", {user: user});
-	})
-	.catch(err => console.log(err));
+	// Users.findOne({email: req.session.user.email})
+	// .then(user => {
+	// 	res.render("interviewPage", {user: user});
+	// })
+	// .catch(err => console.log(err));
+	res.render("interviewPage");
 });
 
 app.get("/dashboard", (req, res) => {

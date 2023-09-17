@@ -145,9 +145,9 @@ router.get('/uploadResume', async (req, res) => {
                 })
                 .catch(err => console.log(err));
             })
-            .catch(err => console.log(err));
-            });
+            .catch(err => console.log(err));;
         });
+})
 
 router.get('/newInterview', async (req, res) => {
     const numberOfQuestions = req.query.q;
