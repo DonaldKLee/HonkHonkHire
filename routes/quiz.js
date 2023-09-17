@@ -4,6 +4,7 @@ const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient();
 
 router.get('/uploadResume', async (req, res) => {
+    console.log("resume uploaded!");
     const resumePath = encodeURI(req.query.r);
     const ans0 = req.query.ans0;
     const ans1 = req.query.ans1;
@@ -19,13 +20,14 @@ router.get('/uploadResume', async (req, res) => {
                 resumeText += result.ParsedText;
             });
 
-            // PLACE HOLDER - PRETEND WE HAVE THE DATA FOR NOW
+            let context = `I am working for the ${ans0} industry, am applying for a ${ans2} ${ans1} role. I am most interested in improving on: ${ans3}. No questions asked.`
+            // console.log(context);
             const cohere = require('cohere-ai');
             cohere.init(process.env.COHERE_KEY); // This is your trial API key
             (async () => {
             const response = await cohere.generate({
                 model: 'command',
-                prompt: `${resumeText}\nGenerate a list of 7 interview questions based on this resume and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \"<1st-question goes here>\"\n            },{\n                 \"question\": \"<2nd-question goes here>\"\n            },    \n        ]\n}`,
+                prompt: `${resumeText}\nGenerate a list of 7 interview questions based on this resume and provide the output in the following JSON format, for context, ${context}:\n{\n    \"questions\":[\n            {\n                 \"question\": \"<1st-question goes here>\"\n            },{\n                 \"question\": \"<2nd-question goes here>\"\n            },    \n        ]\n}`,
                 max_tokens: 500,
                 temperature: 1.2,
                 k: 0,
