@@ -69,13 +69,18 @@ router.get('/callback', async (req, res)=>{
         if(doc){
             //login
             req.session.user = doc
-            res.redirect('/onboarding') //change this later
+            if (doc["onboarding"]) {
+                res.redirect('/dashboard') //change this later
+            }
+            else {
+                res.redirect('/onboarding') //change this later
+            }
         }else{
             //register
             const newUser = new Users({
                 name: googleUser.name,
                 email: googleUser.email,
-                pfp: googleUser.picture,
+                pfp: googleUser.picture
             })
 
             newUser.save()
@@ -87,7 +92,6 @@ router.get('/callback', async (req, res)=>{
         }
     })
     .catch(err => console.log(err))
-
 })
 
 router.get('/logout', (req,res)=>{

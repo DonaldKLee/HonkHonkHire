@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Page</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/dashboardPage.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="content">
+    <img src="/assets/step5bgtr.svg" alt="background" class="bg" style="right: 0; top: 0;">
+    <img src="/assets/step5bgbl.svg" alt="background" class="bg" style="bottom: 0; left: 0;">
+    <div class="header">
+      <img src="/assets/logogoose.svg" alt="logo" />
+    </div>
+    <h1 id="welcome">How long would you like this interview to be?</h3>
+      <div class="buttons">
+   
+        <button id="selectQuestions" onclick="selectInterview(3)">
+          <h3>3 Questions</h3>
+        </button>
+
+        <button id="selectQuestions" onclick="selectInterview(5)">
+            <h3>5 Question</h3>
+          </button>
+
+          <button id="selectQuestions" onclick="selectInterview(8)">
+            <h3>8 Questions</h3>
+          </button>
+      </div>
+  </div>
+
+  <script>
+    // function newInterview() {
+    //   window.location.href = "/interview";
+    // }
+    function selectInterview(numberOfQuestions) {
+      fetch(`/quiz/newInterview?q=${numberOfQuestions}`, {
+        method: 'GET'
+      }).then((resp) => {
+        window.location.href = "/interview";
+      })
+      // update the # of questions on firebase
+      
+      // backend will take that + context to generate questions
+    }
+  </script>
+</body>
+</html>

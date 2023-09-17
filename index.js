@@ -48,7 +48,20 @@ app.get("/", (req, res) => {
 });
 
 app.get("/onboarding", (req, res) => {
-	res.render("onboardingPage");
+	Users.findOne({email: req.session.user.email})
+	.then(user => {
+		res.render("onboardingPage", {user: user});
+	})
+	.catch(err => console.log(err));
+});
+
+
+app.get("/newInterview", (req, res) => {
+	Users.findOne({email: req.session.user.email})
+	.then(user => {
+		res.render("newIntervewPage", {user: user});
+	})
+	.catch(err => console.log(err));
 });
 
 app.get("/interview", (req, res) => {
@@ -57,7 +70,6 @@ app.get("/interview", (req, res) => {
 		res.render("interviewPage", {user: user});
 	})
 	.catch(err => console.log(err));
-	
 });
 
 app.get("/dashboard", (req, res) => {
