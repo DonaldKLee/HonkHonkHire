@@ -80,7 +80,7 @@ html {
 }
 
 #selectQuestions {
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
   align-items: center;
   border-radius: 12px;
@@ -169,4 +169,24 @@ html {
 .loadText {
   font-size: 1.8em;
   text-align: center;
+}
+
+.questionImages {
+  width: 80px;
+  height: auto;
+  margin-right: 20px;
+}
+.qtime {
+  color: #92BFBF;
+  display: inline-block;
+  top: -30px;
+  position: relative;
+}
+.qNumber {
+  display: block;
+  position: relative;
+  top:10px;
+  font-weight: bold;
+  font-size: 1.2em;
+  top: -15px;
 }
