@@ -6,6 +6,7 @@ const cors = require('cors');
 const authRoute = require('./routes/auth');
 const audioRoute = require('./routes/audio');
 const quizRoute = require('./routes/quiz');
+const Users = require('./models/Users');
 require('dotenv').config();
   
 //MIDDLEWARES
@@ -41,15 +42,20 @@ app.use('/quiz', quizRoute);
 
 // ROOT
 app.get("/", (req, res) => {
-	res.render("landingPage.ejs");
+	res.render("landingPage");
 });
 
 app.get("/onboarding", (req, res) => {
-	res.render("onboardingPage.ejs");
+	res.render("onboardingPage");
 });
 
 app.get("/interview", (req, res) => {
-	res.render("interviewPage.ejs");
+	Users.findOne({email: req.session.user.email})
+	.then(user => {
+		res.render("interviewPage", {user: user});
+	})
+	.catch(err => console.log(err));
+	
 });
 
 app.get("/audio", (req, res) => {

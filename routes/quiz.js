@@ -2,6 +2,7 @@ const router = require('express').Router();
 const axios = require('axios');
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient();
+const Users = require('../models/Users');
 
 router.get('/uploadResume', async (req, res) => {
     console.log("resume uploaded!");
@@ -27,14 +28,29 @@ router.get('/uploadResume', async (req, res) => {
             (async () => {
             const response = await cohere.generate({
                 model: 'command',
-                prompt: `${resumeText}\nGenerate a list of 7 interview questions based on this resume and provide the output in the following JSON format, for context, ${context}:\n{\n    \"questions\":[\n            {\n                 \"question\": \"<1st-question goes here>\"\n            },{\n                 \"question\": \"<2nd-question goes here>\"\n            },    \n        ]\n}`,
-                max_tokens: 500,
+                prompt: `${resumeText}\n${context}\nGenerate a list of 5 interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}`,
+                max_tokens: 740,
                 temperature: 1.2,
                 k: 0,
                 stop_sequences: [],
                 return_likelihoods: 'NONE'
             });
+
             console.log(`Prediction: ${response.body.generations[0].text}`);
+            Users.findOne({email: req.session.user.email})
+            .then(async (user) => {
+                // console.log(user);
+                user.questions = await JSON.parse(response.body.generations[0].text);
+                user.save()
+                .then(() => {
+                    console.log("Questions saved!");
+                    res.json({
+                        success: true,
+                    });
+                })
+                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
             })();
 
         });
@@ -46,11 +62,11 @@ router.get('/detectFace',async (req, res) => {
     const faces = result.faceAnnotations;
     console.log('Faces:');
     faces.forEach((face, i) => {
-    console.log(`  Face #${i + 1}:`);
-    console.log(`    Joy: ${face.joyLikelihood}`);
-    console.log(`    Anger: ${face.angerLikelihood}`);
-    console.log(`    Sorrow: ${face.sorrowLikelihood}`);
-    console.log(`    Surprise: ${face.surpriseLikelihood}`);
+        console.log(`  Face #${i + 1}:`);
+        console.log(`    Joy: ${face.joyLikelihood}`);
+        console.log(`    Anger: ${face.angerLikelihood}`);
+        console.log(`    Sorrow: ${face.sorrowLikelihood}`);
+        console.log(`    Surprise: ${face.surpriseLikelihood}`);
     });
 })
 
