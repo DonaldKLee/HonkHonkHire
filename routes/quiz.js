@@ -9,8 +9,10 @@ const util = require('util');
 const firebase = require('firebase/app');
 require('firebase/storage');
 const Users = require('../models/Users');
+const { getDownloadURL } = require('firebase/storage');
+const {isAuthorized} = require('../config/authCheck');
 
-router.get('/uploadResume', async (req, res) => {
+router.get('/uploadResume', isAuthorized, async (req, res) => {
     console.log("resume uploaded!");
     const resumePath = encodeURI(req.query.r);
     const ans0 = req.query.ans0;
@@ -63,7 +65,7 @@ router.get('/uploadResume', async (req, res) => {
         });
 })
 
-router.get('/newInterview', async (req, res) => {
+router.get('/newInterview', isAuthorized, async (req, res) => {
     const numberOfQuestions = req.query.q;
 
     Users.findOne({email: req.session.user.email})
@@ -130,10 +132,31 @@ router.get('/newInterview', async (req, res) => {
                     const bucket = storage.bucket();
 
                     const audios = [];
+                    const audioPaths = [];
 
-                    async function uploadFile(index) {
-                        const filePath = `audios/output-${index}.mp3`; // Replace with the actual file path
-                        const fileName = `${new Date}-output-${index}.mp3`;
+                    // async function quickStart(text, index) {
+                    //     // Construct the request
+                    //     const request = {
+                    //       input: {text: text},
+                    //       // Select the language and SSML voice gender (optional)
+                    //       voice: {languageCode: 'en-US', ssmlGender: 'MALE'},
+                    //       // select the type of audio encoding
+                    //       audioConfig: {audioEncoding: 'MP3'},
+                    //     };
+                      
+                    //     // Performs the text-to-speech request
+                    //     const [response] = await ttsclient.synthesizeSpeech(request);
+                    //     // Write the binary audio content to a local file
+                    //     const writeFile = util.promisify(fs.writeFile);
+                    //     await writeFile(`audios/output-${index}.mp3`, response.audioContent, 'binary');
+
+                    //     uploadFile(index)
+                    //     .catch(console.error);
+                    // }
+
+                   async function getDownloadURL() {
+                        const filePath = audioPaths[0]; // Replace with the actual file path
+                        const fileName = `${new Date}-${audioPaths[0]}`;
     
                         await bucket.upload(filePath, {
                             destination: fileName,
@@ -143,50 +166,82 @@ router.get('/newInterview', async (req, res) => {
                         }); 
     
                         // Generate a download URL for the uploaded file
-                        const downloadUrl = await bucket.file(fileName).getSignedUrl({
+                        bucket.file(fileName).getSignedUrl({
                             action: 'read',
                             expires: '03-09-2030' // Set an expiration date for the URL
-                        });
-    
-                        console.log('Download URL:', downloadUrl[0]);
-                        audios.push(downloadUrl[0]);
-                        if(audios.length == user.questions.questions.length) {
-                            user.audios = audios;
-                            user.save()
-                            .then((resp) => {
-                                console.log("Audios saved!");
-                                res.json({
-                                    success: true,
-                                });
+                        }).then(async (downloadUrl) => {
+                            console.log('Download URL:', downloadUrl[0]);
+                            audios.push(downloadUrl[0]);
+                            const filePath = audioPaths[1]; // Replace with the actual file path
+                            const fileName = `${new Date}-${audioPaths[1]}`;
+        
+                            await bucket.upload(filePath, {
+                                destination: fileName,
+                                metadata: {
+                                    contentType: 'file/mp3' // Adjust content type as needed
+                                }
+                            }); 
+        
+                            // Generate a download URL for the uploaded file
+                            bucket.file(fileName).getSignedUrl({
+                                action: 'read',
+                                expires: '03-09-2030' // Set an expiration date for the URL
+                            }).then(async (downloadUrl) => {
+                                console.log('Download URL:', downloadUrl[0]);
+                                audios.push(downloadUrl[0]);
+                                const filePath = audioPaths[2]; // Replace with the actual file path
+                                const fileName = `${new Date}-${audioPaths[2]}`;
+            
+                                await bucket.upload(filePath, {
+                                    destination: fileName,
+                                    metadata: {
+                                        contentType: 'file/mp3' // Adjust content type as needed
+                                    }
+                                }); 
+            
+                                // Generate a download URL for the uploaded file
+                                bucket.file(fileName).getSignedUrl({
+                                    action: 'read',
+                                    expires: '03-09-2030' // Set an expiration date for the URL
+                                }).then(async (downloadUrl) => {
+                                    console.log('Download URL:', downloadUrl[0]);
+                                    audios.push(downloadUrl[0]);
+                                    user.audios = audios;
+                                    user.save()
+                                    .then(() => {
+                                        res.json({
+                                            success: true,
+                                        });
+                                    })
+                                    .catch(err => console.log(err));
+                                })
                             })
-                            .catch(err => console.log(err));
-                        }
+                        })
                     }
     
+                        
 
-                    async function quickStart(text, index) {
-                        // Construct the request
-                        const request = {
-                          input: {text: text},
-                          // Select the language and SSML voice gender (optional)
-                          voice: {languageCode: 'en-US', ssmlGender: 'MALE'},
-                          // select the type of audio encoding
-                          audioConfig: {audioEncoding: 'MP3'},
+                    user.questions.questions.forEach(async (question, index) => {
+                    // Construct the request
+                    const request = {
+                        input: {text: question.question},
+                        // Select the language and SSML voice gender (optional)
+                        voice: {languageCode: 'en-US', ssmlGender: 'MALE'},
+                        // select the type of audio encoding
+                        audioConfig: {audioEncoding: 'MP3'},
                         };
-                      
+                    
                         // Performs the text-to-speech request
                         const [response] = await ttsclient.synthesizeSpeech(request);
                         // Write the binary audio content to a local file
                         const writeFile = util.promisify(fs.writeFile);
                         await writeFile(`audios/output-${index}.mp3`, response.audioContent, 'binary');
-
-                        uploadFile(index)
-                        .catch(console.error);
-                    }
-
-                    for(let i = 0; i < user.questions.questions.length; i++) {
-                        quickStart(user.questions.questions[i].question, i);
-                    }
+                        audioPaths.push(`audios/output-${index}.mp3`);
+                        if (audioPaths.length == user.questions.questions.length) {
+                            audioPaths.sort();
+                            getDownloadURL();
+                        }
+                    });
                 })
                 .catch(err => console.log(err));
             })
@@ -195,29 +250,28 @@ router.get('/newInterview', async (req, res) => {
 });
 
 
-router.get('/detectFace',async (req, res) => {
+router.get('/detectFace',  isAuthorized, async (req, res) => {
     const fileUrl = req.query.f;
     const [result] = await client.faceDetection(`${fileUrl}`);
     const faces = result.faceAnnotations;
     console.log('Faces:');
-    faces.forEach((face, i) => {
-        console.log(face)
-        if (face.joyLikelihood === 'VERY_LIKELY' || face.joyLikelihood === 'LIKELY' || face.joyLikelihood === 'POSSIBLE') {
+        console.log(faces[0])
+        if (faces[0].joyLikelihood === 'VERY_LIKELY' || faces[0].joyLikelihood === 'LIKELY' || faces[0].joyLikelihood === 'POSSIBLE') {
             res.json({
                 success: true,
                 emotion: "Joy"
             });
-        } else if (face.angerLikelihood === 'VERY_LIKELY' || face.angerLikelihood === 'LIKELY' || face.angerLikelihood === 'POSSIBLE') {
+        } else if (faces[0].angerLikelihood === 'VERY_LIKELY' || faces[0].angerLikelihood === 'LIKELY' || faces[0].angerLikelihood === 'POSSIBLE') {
             res.json({
                 success: true,
                 emotion: "Anger"
             });
-        } else if (face.sorrowLikelihood === 'VERY_LIKELY' || face.sorrowLikelihood === 'LIKELY' || face.sorrowLikelihood === 'POSSIBLE') {
+        } else if (faces[0].sorrowLikelihood === 'VERY_LIKELY' || faces[0].sorrowLikelihood === 'LIKELY' || faces[0].sorrowLikelihood === 'POSSIBLE') {
             res.json({
                 success: true,
                 emotion: "Sorrow"
             });
-        } else if (face.surpriseLikelihood === 'VERY_LIKELY' || face.surpriseLikelihood === 'LIKELY' || face.surpriseLikelihood === 'POSSIBLE') {
+        } else if (faces[0].surpriseLikelihood === 'VERY_LIKELY' || faces[0].surpriseLikelihood === 'LIKELY' || faces[0].surpriseLikelihood === 'POSSIBLE') {
             res.json({
                 success: true,
                 emotion: "Surprise"
@@ -227,8 +281,7 @@ router.get('/detectFace',async (req, res) => {
                 success: true,
                 emotion: "Joy"
             });
-        }
-    });
+        };
 })
 
 module.exports = router;

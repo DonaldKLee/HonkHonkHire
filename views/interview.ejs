@@ -47,7 +47,7 @@
 
 		<div class="toggle-content" id="question">
 			<span style="color: #2b918f">Q:&nbsp;</span>
-			<span><%= user.questions.questions[0].question %></span>
+			<span><%= user.questions.questions[(user.lastCompletedQuestion+1)].question %></span>
 		</div>
 
 		<div class="toggle-content" id="feedback">
@@ -78,9 +78,15 @@
 			</div>
 		</div>
 
-		<button class="toggle-content" id="next-question" onclick="nextQuestion()">
-			Finish
-		</button>
+		<% if (user.lastCompletedQuestion < 1) { %>
+			<button class="toggle-content" id="next-question" onclick="nextQuestion()">
+				Next Question
+			</button>
+		<% } else { %>
+			<button class="toggle-content" id="next-question" onclick="finishQuestion()">
+				Finish
+			</button>
+		<%}%>
         <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
         <script type="module" src="js/video.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
@@ -94,6 +100,7 @@
 
 			const audio = document.getElementById("music");
 			audio.pause();
+			document.getElementById("interviewer").pause();
 
 			window.onload = () => {
 				document.getElementById("startBtn").classList.remove("is-visible");
@@ -208,6 +215,10 @@
 
 				// // Move to bottom left
 				// div.style.width = "100vw";
+				window.location.reload();
+			}
+
+			function finishQuestion() {
 				window.location.href = "/finished";
 			}
 

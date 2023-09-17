@@ -7,6 +7,7 @@ const authRoute = require("./routes/auth");
 const audioRoute = require("./routes/audio");
 const quizRoute = require("./routes/quiz");
 const Users = require("./models/Users");
+const { isAuthorized } = require("./config/authCheck");
 require("dotenv").config();
 
 //MIDDLEWARES
@@ -47,7 +48,7 @@ app.get("/", (req, res) => {
 	res.render("landingPage");
 });
 
-app.get("/onboarding", (req, res) => {
+app.get("/onboarding",  isAuthorized, (req, res) => {
 	Users.findOne({ email: req.session.user.email })
 		.then((user) => {
 			res.render("onboardingPage", { user: user });
@@ -55,7 +56,7 @@ app.get("/onboarding", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
-app.get("/newInterview", (req, res) => {
+app.get("/newInterview",  isAuthorized, (req, res) => {
 	Users.findOne({ email: req.session.user.email })
 		.then((user) => {
 			res.render("newIntervewPage", { user: user });
@@ -63,7 +64,7 @@ app.get("/newInterview", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
-app.get("/interview", (req, res) => {
+app.get("/interview",  isAuthorized, (req, res) => {
 	Users.findOne({ email: req.session.user.email })
 	.then(user => {
 		res.render("interview", {user});
@@ -73,11 +74,11 @@ app.get("/interview", (req, res) => {
 	.catch(err => console.log(err));
 });
 
-app.get("/finished", (req, res) => {
+app.get("/finished", isAuthorized, (req, res) => {
 	res.render("finishedPage");
 })
 
-app.get("/dashboard", (req, res) => {
+app.get("/dashboard",  isAuthorized, (req, res) => {
 	Users.findOne({ email: req.session.user.email })
 	.then((user) => {
 		// console.log(user["name"]);
@@ -86,15 +87,15 @@ app.get("/dashboard", (req, res) => {
 	.catch((err) => console.log(err));
 });
 
-app.get("/finished", (req, res) => {
+app.get("/finished",  isAuthorized,(req, res) => {
 	res.render("finishedPage.ejs");
 });
 
-app.get("/interviewSummary", (req, res) => {
+app.get("/interviewSummary",  isAuthorized,(req, res) => {
 	res.render("interviewSummary.ejs");
 });
 
-app.get("/audio", (req, res) => {
+app.get("/audio",  isAuthorized, (req, res) => {
 	const audioUrl = req.query.a;
 	console.log(audioUrl);
 	res.json({

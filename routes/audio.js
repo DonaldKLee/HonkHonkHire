@@ -3,6 +3,7 @@ const multer = require('multer');
 const speech = require('@google-cloud/speech');
 const client = new speech.SpeechClient();
 const { Storage } = require('@google-cloud/storage');
+const {isAuthorized} = require('../config/authCheck');
 
 // GOOGLE CLOUD STORAGE
 const projectId = 'htn23-399207';
@@ -16,7 +17,7 @@ const storage = new Storage({
 const multerStorage = multer.memoryStorage();
 const upload = multer({ multerStorage });
 
-router.post('/upload-audio', upload.single('audio'), async (req, res) => {
+router.post('/upload-audio', isAuthorized, upload.single('audio'), async (req, res) => {
   const file = req.file.buffer;
   const fileName = encodeURI(`${new Date}-audio.wav`);
 
