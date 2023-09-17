@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "hackthenorth-ed2fa",
+    "private_key_id": "15c1a303b6f7fa3247293856fc5ee799e878e4e8",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDKMP1/s3H49qbU\n+TdiwFl9NEtk4ZHE1OXRK3LVHyDN0VFlLl3yicHSXtXOvwk1pZMaLJ6DCtsnaWWM\n4QsHZ3a1n4jKEPuscWZCL/avvdWsNo2R8SaTgnGs0JvB2ZkR5dghALpcxOCYtMhB\nRGmvST7dWhV7pbNcDd79yUJ+q+5nxoGAt9DxM43NudGAPEflldxCQ+ilpT1dDmu6\nPxNbCJwSTc5zzR2u5n/kn4wJiOOatyZzC4yNfWOvgVpb+AiN/FvrFwBhL7oqqoP4\nyjDI+V34AlKGofyNuPoPajdDd5nKhTiEBRz9CxMjG5mm64aPkyM9nMiFncrGNC0F\nzx/AGoUHAgMBAAECggEACzmuEUVuqfJTr9ZIP2jLbxqUpvypAaMKQVMmtHNeeF7L\nJJFu8NS6GIpgV3KeucZABP9+K2tSYH1HAIvL93TEj+/UAdfwiRHgqgMMsJQbBU0g\nDf6z9BOVaRFJ3HjOuUIn/ikSr6zUhVXgGlOIhI1N+q8SK0O3UgCJJVDjqrGz8jnn\nN+Owq32DVyuroyfsle6mrIU2YjNlleAL6r0hPVt0CldJP8EXudeocSopGJDPHmeI\n+t779VgwJOzNnqfuX+B/ggDVOLO9b1SNvKIS3Vzb/RagRyRHU0t1wXk24XUdA0F1\nUmUxXqJ0ECznH93FTlOpB5PMhK2mxPxQJA1eezuvbQKBgQD8UF/k1fApu3IZqg4U\npq3Xgtjqwg6yPXgwBpq7Dh3b1aWyqOtmP4XD3l2zlwps5NxjfbotaPL8tTrHzFin\n8GORG+c+6P8mPT8mOJ5R8ugNOzketgU080dM3BfU7qu7akqjS4lBHl+nAKisW4HX\nnx4rMgc8Y/6TO1dQ8Swbos96EwKBgQDNJSmxRiJMjwZ5Vc6H07K/48Qkl6a9sS9Q\nJ/EJkezeb27Ciimx4Z0DB2Av2hqTnN3LjHNm7e6YAnnlYESBzaAnHqr5HuhGUR5R\nmcTUkXzDdf8/TLib3scEoDQ14zzm5gSTwN+A1nw7pfyiBu0Q6Cguu34ufE1kvPzL\nKziho+mnvQKBgQCzUKvWBfVYs06zzpeTNaH2t5dRv/iR0/3Go+rzZWTzBzNrdYFW\neW6ndTFCoOVX3o6CZqgZ/awyzNmphSC8uasJRbtiilRK6NwoXbSmqOsh/CTsHpA0\nwXC6vvBw8+44k6HXy6cQEHYKSf2WALKWew8Fw9hAoxAZsuKrM7sVKPAq4QKBgHcg\ncoKQEJDWqVLCYkl7xJwrvpXlPp1/C9OHLjB5fcx5dx8fLjEuq4e7u75t7+ryN9Xg\nvI7z8g5xualaas3Zw3uUEoLR0N4scue93I/34DR9C/kNK1LQXk+wXEFCsPYAcn3+\njYt6ge/9ZqQMU5PyzIq+s/p4klTCbiXo9lzfG2sdAoGAHGEqfG4ncL+v4J/BSxYy\nEIMpHeI38gJNBv7d8n71NUho31RIfY3NZ8xinkmoCvoXlFelkpOsXV8OK3WfxPM0\n4yED6J/Mw7iaJIlyURrgf7ewPHPJa7RRaC3Nc8+/RMUxltvH6DSA5BlvQivfYPkT\nqnP0hsJFu9EhYb+bwe51ewo=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-w0njn@hackthenorth-ed2fa.iam.gserviceaccount.com",
+    "client_id": "114695699058255511054",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-w0njn%40hackthenorth-ed2fa.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }

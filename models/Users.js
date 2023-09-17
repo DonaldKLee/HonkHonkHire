@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
     questions: {
         type: Object,
     },
+    audios: {
+        type: Array,
+    },
     date: {
         type: Date,
         default: new Date,
