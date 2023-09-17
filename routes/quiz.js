@@ -151,24 +151,40 @@ router.get('/uploadResume', async (req, res) => {
 
 router.get('/newInterview', async (req, res) => {
     const numberOfQuestions = req.query.q;
-    console.log(numberOfQuestions);
+
     Users.findOne({email: req.session.user.email})
         .then(async (user) => {
             user.numberOfQuestions = numberOfQuestions;
-            
+            let resumeText = user.resumeText;
+            let context = user.context;
+
+            // console.log(`Generate a list of ${numberOfQuestions} interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}\n\nHere is some context: ${context}\nHere is my resume:\n${resumeText}`)
             // get user resume and context
-
-            // get cohere to ask questions
-
-            user.save()
-            .then((resp) => {
-                console.log("Questions saved!");
-                res.json({
-                    success: true,
-                });
-            })
+            const cohere = require('cohere-ai');
+            cohere.init(process.env.COHERE_KEY); // This is your trial API key
+            (async () => {
+            const response = await cohere.generate({
+                model: 'command',
+                prompt: `Generate a list of ${numberOfQuestions} interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}\n\nHere is some context: ${context}\nHere is my resume:\n${resumeText}`,
+                max_tokens: 300,
+                temperature: 0.9,
+                k: 0,
+                stop_sequences: [],
+                return_likelihoods: 'NONE'
+              });
+            //   console.log(`Prediction: ${response.body.generations[0].text}`);
+              user.questions = response.body.generations[0].text;
+              user.save()
+              .then((resp) => {
+                  console.log("Questions saved!");
+                  res.json({
+                      success: true,
+                  });
+              })
+              console.log("Questions generated!")
+            })();
         })
-})
+});
 
 router.get('/detectFace',async (req, res) => {
     const fileUrl = req.query.f;
