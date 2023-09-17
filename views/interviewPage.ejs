@@ -12,22 +12,33 @@
 			href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
 			rel="stylesheet"
 		/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"/>
 	</head>
 	<body>
-		<div class="content">
-			<button id="captureButton">Capture Image</button>
-			<video id="videoElement" autoplay></video>
-			<canvas id="canvasElement"></canvas>
-			<img id="capturedImage" style="display: none" />
-		</div>
+        <div id="liveView" class="videoView">
+            <button id="webcamButton" class="mdc-button mdc-button--raised">
+              <span class="mdc-button__ripple"></span>
+              <span class="mdc-button__label">ENABLE WEBCAM</span>
+            </button>
+            <div style="position: relative;">
+              <video id="webcam" style="position: abso" autoplay playsinline></video>
+              <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+            </div>
+          </div>
+          <div class="blend-shapes">
+            <ul class="blend-shapes-list" id="video-blend-shapes"></ul>
+          </div>
+        </section>
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script type="module" src="js/video.js"></script>
 		<!-- The core Firebase JS SDK is always required and must be listed first -->
 		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
 		<script>
-			const captureButton = document.getElementById("captureButton");
-			const videoElement = document.getElementById("videoElement");
-			const canvasElement = document.getElementById("canvasElement");
-			const capturedImage = document.getElementById("capturedImage");
+			// const captureButton = document.getElementById("captureButton");
+			// const videoElement = document.getElementById("videoElement");
+			// const canvasElement = document.getElementById("canvasElement");
+			// const capturedImage = document.getElementById("capturedImage");
 
         // // Access the user's camera
         // navigator.mediaDevices.getUserMedia({ video: true })
