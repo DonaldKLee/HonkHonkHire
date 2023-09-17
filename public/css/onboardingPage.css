@@ -185,3 +185,35 @@ label {
 .toggle-content.is-visible {
   display: flex;
 }
+
+
+#loading {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: #FFF;
+  top: 0;
+  z-index: 2;
+}
+
+.gooseGifLoad {
+  display: block;
+  margin: 0 auto;
+  width: 500px;
+  height: auto;
+  margin-top: 100px;
+}
+
+.iconsLoading {
+  display: block;
+  margin: 0 auto;
+  transform: scale(0.3);
+  text-align: center;
+  margin-top: 150px;
+  margin-bottom: -20px;
+}
+
+.loadText {
+  font-size: 1.8em;
+  text-align: center;
+}

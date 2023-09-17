@@ -11,6 +11,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
     rel="stylesheet">
+
+    
+  <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
 </head>
 
 <body>
@@ -139,6 +142,42 @@
         <button id="readyBtn" onclick="submitOnboarding()">View Dashboard</button>
       </div>
     </div>
+
+    
+    <div id="loading" style="display: none">
+      <img src="/assets/step5bgtr.svg" alt="background" class="bg" style="right: 0; top: 0;">
+      <img src="/assets/step5bgbl.svg" alt="background" class="bg" style="bottom: 0; left: 0;">
+      <!-- <img class="gooseGifLoad" src="/assets/gooseLoading.gif" /> -->
+      <div class="iconsLoading">
+        <lord-icon
+            src="https://cdn.lordicon.com/zpxybbhl.json"
+            trigger="loop"
+            colors="primary:#121331,secondary:#08a88a"
+            style="width:250px;height:250px">
+        </lord-icon>
+        <lord-icon
+            src="https://cdn.lordicon.com/nocovwne.json"
+            trigger="loop"
+            delay="2000"
+            colors="primary:#121331,secondary:#08a88a"
+            style="width:250px;height:250px">
+        </lord-icon>
+        <lord-icon
+            src="https://cdn.lordicon.com/rulhujcg.json"
+            trigger="loop"
+            delay="2000"
+            colors="primary:#08a88a,secondary:#121331"
+            style="width:250px;height:250px">
+        </lord-icon>
+        <lord-icon
+            src="https://cdn.lordicon.com/nxaaasqe.json"
+            trigger="loop"
+            colors="primary:#121331,secondary:#08a88a"
+            style="width:250px;height:250px">
+        </lord-icon>
+      </div>
+      <h2 class="loadText">Please wait while we set up your account...</h2>
+    </div>
   </div>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -208,6 +247,9 @@
   </script>
   <script>
         function submitOnboarding() {
+          // displays loading
+          document.getElementById("loading").style.display="block";
+
           resumeFile = document.getElementById("resumeInput").files[0];
 
           console.log(step0ans, step1ans, step2ans, step3ans, resumeFile.name);

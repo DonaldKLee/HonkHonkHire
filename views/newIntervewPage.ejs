@@ -11,6 +11,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
     rel="stylesheet">
+
+  <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
 </head>
 
 <body>
@@ -38,8 +40,38 @@
   </div>
 
   <div id="loading" style="display: none">
-    <img class="gooseGifLoad" src="/assets/gooseLoading.mp4" />
-    <h2 class="loadText">Please wait while we generate some questions ...</h2>
+    <img src="/assets/step5bgtr.svg" alt="background" class="bg" style="right: 0; top: 0;">
+    <img src="/assets/step5bgbl.svg" alt="background" class="bg" style="bottom: 0; left: 0;">
+    <!-- <img class="gooseGifLoad" src="/assets/gooseLoading.gif" /> -->
+    <div class="iconsLoading">
+      <lord-icon
+          src="https://cdn.lordicon.com/zpxybbhl.json"
+          trigger="loop"
+          colors="primary:#121331,secondary:#08a88a"
+          style="width:250px;height:250px">
+      </lord-icon>
+      <lord-icon
+          src="https://cdn.lordicon.com/nocovwne.json"
+          trigger="loop"
+          delay="2000"
+          colors="primary:#121331,secondary:#08a88a"
+          style="width:250px;height:250px">
+      </lord-icon>
+      <lord-icon
+          src="https://cdn.lordicon.com/rulhujcg.json"
+          trigger="loop"
+          delay="2000"
+          colors="primary:#08a88a,secondary:#121331"
+          style="width:250px;height:250px">
+      </lord-icon>
+      <lord-icon
+          src="https://cdn.lordicon.com/nxaaasqe.json"
+          trigger="loop"
+          colors="primary:#121331,secondary:#08a88a"
+          style="width:250px;height:250px">
+      </lord-icon>
+    </div>
+    <h2 class="loadText">Please wait while we generate some questions...</h2>
   </div>
 
   <script>
@@ -48,16 +80,14 @@
     // }
     function selectInterview(numberOfQuestions) {
       // displays loading
+      document.getElementById("loading").style.display="block";
 
-
+      // update the # of questions on firebase
       fetch(`/quiz/newInterview?q=${numberOfQuestions}`, {
         method: 'GET'
       }).then((resp) => {
         window.location.href = "/interview";
       })
-      // update the # of questions on firebase
-      
-      // backend will take that + context to generate questions
     }
   </script>
 </body>
