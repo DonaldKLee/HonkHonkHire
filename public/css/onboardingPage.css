@@ -160,8 +160,7 @@ label {
 
 #readyBtn {
   display: inline;
-  width: 150px;
-  padding: 12px 12px;
+  padding: 12px 24px;
   border-width: 1.7px;
   border-style: solid;
   border-color: #319795;

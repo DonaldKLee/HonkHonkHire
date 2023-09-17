@@ -4,14 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Landing Page</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/landingPage.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
-  <div>
-    <h3>this is landing page</h3>
+  <img src="/assets/step5bgtr.svg" alt="background" class="bg" style="right: 0; top: 0;">
+  <img src="/assets/step5bgbl.svg" alt="background" class="bg" style="bottom: 0; left: 0;">
 
-    <a href="/auth/login">Start</a>
+  <div class="content">
+    <img class="logo" src="/assets/logogoose.svg" alt="logo">
+    <h1 id="welcome">Welcome to Elevate!</h1>
+    <img src="assets/googleAuth.svg" alt="login with google" style="height: 40px;" onclick="googleAuth()">
   </div>
+
+  <script>
+    function googleAuth() {
+      window.location.href = "/auth/login"
+    }
+  </script>
 </body>
 
 </html>
