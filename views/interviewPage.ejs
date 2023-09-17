@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/video.css">
-    <title>Camera Capture</title>
-</head>
-<body>
-    <h1>MediaPipe Face Landmark Detector</h1>
-    <video id="webcam" autoplay playsinline></video>
-    <canvas id="overlay"></canvas>
-    <script type="module" src="js/video.js"></script>
-    <!-- <button id="captureButton">Capture Image</button>
-    <video id="videoElement" autoplay playsinline style="height: 50vw; width: 50vw;"></video>
-    <canvas id="canvasElement"></canvas> -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
-    <script>
-        // const captureButton = document.getElementById('captureButton');
-        // const videoElement = document.getElementById('videoElement');
-        // const canvasElement = document.getElementById('canvasElement');
-        // const capturedImage = document.getElementById('capturedImage');
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Camera Capture</title>
+		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="css/interviewPage.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<div class="content">
+			<button id="captureButton">Capture Image</button>
+			<video id="videoElement" autoplay></video>
+			<canvas id="canvasElement"></canvas>
+			<img id="capturedImage" style="display: none" />
+		</div>
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+		<script>
+			const captureButton = document.getElementById("captureButton");
+			const videoElement = document.getElementById("videoElement");
+			const canvasElement = document.getElementById("canvasElement");
+			const capturedImage = document.getElementById("capturedImage");
 
         // // Access the user's camera
         // navigator.mediaDevices.getUserMedia({ video: true })
