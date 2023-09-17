@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Interview page temp</title>
+		<link rel="stylesheet" href="css/tempPage.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body style="margin: 0">
+		<div class="content" id="interview-content">
+			<div class="video">
+				<video id="videoElement" autoplay></video>
+				<video
+					id="interviewer"
+					src="assets/interviewer.mp4"
+					autoplay
+					loop
+				></video>
+				<button
+					class="toggle-content is-visible control-response"
+					id="startBtn"
+					onclick="startRecording()"
+				>
+					Start Response
+				</button>
+				<button
+					class="toggle-content submitBtn"
+					id="submitBtn"
+					onclick="stopRecording()"
+				>
+					Submit Reponse
+				</button>
+			</div>
+		</div>
+
+		<div class="toggle-content" id="question">
+			<span style="color: #2b918f">Q:&nbsp;</span>
+			<span>Tell me about a challenge you faced as a designer at nwPlus</span>
+		</div>
+
+		<div class="toggle-content" id="feedback">
+			<div class="flex">
+				<div id="your-response">
+					<h1>Your Response</h1>
+					<p>
+						Well, as the product designer at nwPlus, my main um job was to um
+						like delegate tasks to my team and design like the websites. I
+						divided the website into sections and, you know, gave each of the
+						designers on the team a website section. I was also in charge of
+						weekly meetings and um making sure everything was handed-off by the
+						deadline. In the summer I worked on like an internal tool too, the
+						QR app that keeps track of hacker information. We also did some
+						graphic design for our marketing team, we designed Instagram posts
+						and other graphics to be posted to our social media platforms.
+					</p>
+				</div>
+
+				<hr class="rounded" />
+
+				<div id="custom-feedback">
+					<h1>Feedback</h1>
+					<p>
+						Your response provides a good overview of your responsibilities at
+						nwPlus. However, you could enhance clarity and confidence by
+						structuring your points more concisely and the avoiding filler words
+						"um" and "like. Also, consider elaborating a bit more on the impact
+						or results of the QR project to give a clearer picture of your
+						contributions.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<button class="toggle-content" id="next-question" onclick="nextQuestion()">
+			Next Question
+		</button>
+
+		<script>
+			const videoElement = document.getElementById("videoElement");
+
+			navigator.mediaDevices
+				.getUserMedia({ video: true })
+				.then((stream) => {
+					videoElement.srcObject = stream;
+				})
+				.catch((error) => {
+					console.error("Error accessing camera:", error);
+				});
+
+			function startRecording() {
+				document.getElementById("startBtn").classList.remove("is-visible");
+				document.getElementById("submitBtn").classList.add("is-visible");
+				document.getElementById("interviewer").pause();
+			}
+
+			function stopRecording() {
+				// document.getElementById("startBtn").classList.add("is-visible");
+				document.getElementById("submitBtn").classList.remove("is-visible");
+				document.getElementById("interviewer").play();
+				document.getElementById("question").classList.add("is-visible");
+				document.getElementById("feedback").classList.add("is-visible");
+				document.getElementById("next-question").classList.add("is-visible");
+				minimize();
+			}
+
+			function minimize() {
+				const div = document.getElementById("interview-content");
+
+				// Scale down to 0.5 ratio
+				div.style.transform = "translate(-10%, 10%) scale(0.65)";
+
+				// Move to bottom left
+				div.style.width = "50vw";
+			}
+
+			function nextQuestion() {
+				document.getElementById("startBtn").classList.add("is-visible");
+				document.getElementById("submitBtn").classList.remove("is-visible");
+				document.getElementById("question").classList.remove("is-visible");
+				document.getElementById("feedback").classList.remove("is-visible");
+				document.getElementById("next-question").classList.remove("is-visible");
+
+				const div = document.getElementById("interview-content");
+
+				// Scale down to 0.5 ratio
+				div.style.transform = "translate(0%, 00%) scale(1)";
+
+				// Move to bottom left
+				div.style.width = "100vw";
+
+				document.getElementById("interviewer").play();
+			}
+		</script>
+	</body>
+</html>

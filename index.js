@@ -6,7 +6,7 @@ const cors = require("cors");
 const authRoute = require("./routes/auth");
 const audioRoute = require("./routes/audio");
 const quizRoute = require("./routes/quiz");
-const Users = require('./models/Users');
+const Users = require("./models/Users");
 require("dotenv").config();
 
 //MIDDLEWARES
@@ -52,12 +52,11 @@ app.get("/onboarding", (req, res) => {
 });
 
 app.get("/interview", (req, res) => {
-	Users.findOne({email: req.session.user.email})
-	.then(user => {
-		res.render("interviewPage", {user: user});
-	})
-	.catch(err => console.log(err));
-	
+	Users.findOne({ email: req.session.user.email })
+		.then((user) => {
+			res.render("interviewPage", { user: user });
+		})
+		.catch((err) => console.log(err));
 });
 
 app.get("/dashboard", (req, res) => {
@@ -66,6 +65,10 @@ app.get("/dashboard", (req, res) => {
 
 app.get("/interviewSummary", (req, res) => {
 	res.render("interviewSummary.ejs");
+});
+
+app.get("/temp", (req, res) => {
+	res.render("tempPage.ejs");
 });
 
 app.get("/audio", (req, res) => {
