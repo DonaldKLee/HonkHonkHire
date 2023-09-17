@@ -92,7 +92,9 @@
       fetch(`/quiz/newInterview?q=${numberOfQuestions}`, {
         method: 'GET'
       }).then((resp) => {
-        window.location.href = "/interview";
+        setTimeout(() => {
+          window.location.href = "/interview";
+        }, 2000);
       })
     }
   </script>

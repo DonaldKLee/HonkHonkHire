@@ -6,13 +6,19 @@ const videoBlendShapes = document.getElementById("video-blend-shapes")
 let notyf = new Notyf({
     duration: 2500,
     position: { x: "center", y: "top" },
+    types: [
+        {
+            type: "custom",
+            background: "#805AD5",
+            icon: false
+        }
+    ]
 });
 
 let faceLandmarker
 let runningMode = "VIDEO"
-let enableWebcamButton
 let webcamRunning = true
-const videoWidth = 700
+const videoWidth = 950
 
 // Before we can use HandLandmarker class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
@@ -46,11 +52,15 @@ function hasGetUserMedia() {
 // If webcam supported, add event listener to button for when user
 // wants to activate it.
 if (hasGetUserMedia()) {
-  enableWebcamButton = document.getElementById("webcamButton")
-  enableWebcamButton.addEventListener("click", enableCam)
+//   enableWebcamButton = document.getElementById("webcamButton")
+//   enableWebcamButton.addEventListener("click", enableCam)
+    setTimeout(() => {
+        enableCam()
+    }, 500);
 } else {
   console.warn("getUserMedia() is not supported by your browser")
 }
+
 
 // Enable the live webcam view and start detection.
 function enableCam(event) {
@@ -58,6 +68,8 @@ function enableCam(event) {
     console.log("Wait! faceLandmarker not loaded yet.")
     return
   }
+
+  console.log("hi")
 
   // getUsermedia parameters.
   const constraints = {
@@ -69,7 +81,10 @@ function enableCam(event) {
     video.srcObject = stream
     video.addEventListener("loadeddata", predictWebcam)
     setTimeout(() => {
-        notyf.success("Face detected!");
+        notyf.open({
+            type: 'custom',
+            message: `<b>Face detected!</b>` 
+        });
     }, 2000);
   })
 }
@@ -177,7 +192,10 @@ function drawBlendShapes(el, blendShapes) {
   console.log(blendShapes[0].categories)
 
   if(blendShapes[0].categories[44].score > 0.7 || blendShapes[0].categories[45].score > 0.7) {
-    notyf.success("Keep smiling! You're doing great!");
+    notyf.open({
+        type: 'custom',
+        message: `<b>Keep smiling! You're doing great!</b>` 
+    });
     document.querySelectorAll('.notyf__toast').slice(1).forEach((el) => {
         el.style.display = "none";
     });

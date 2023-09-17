@@ -24,3 +24,7 @@
   font-size: 48px;
   margin-bottom: 24px;
 }
+
+.gAuth:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Interview page temp</title>
+		<link rel="stylesheet" href="css/tempPage.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"/>
+	</head>
+	<body style="margin: 0">
+		<div class="content" id="interview-content">
+			<audio id="music">
+				<source src="<%= user.audios[(user.lastCompletedQuestion+1)] %>" type="audio/mpeg">
+			</audio>
+			<div class="video">
+					<video id="webcam" style="position: abso" autoplay playsinline></video>
+					<canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 290px; top: 0px;"></canvas>
+					<!-- <video id="videoElement" autoplay></video> -->
+				<video
+					id="interviewer"
+					src="assets/interviewer.mp4"
+					autoplay
+					loop
+				></video>
+				<button
+					class="toggle-content is-visible control-response"
+					id="startBtn"
+					onclick="startRecording()"
+				>
+					Start Response
+				</button>
+				<button
+					class="toggle-content submitBtn"
+					id="submitBtn"
+					onclick="stopRecording()"
+				>
+					Submit Reponse
+				</button>
+			</div>
+		</div>
+
+		<div class="toggle-content" id="question">
+			<span style="color: #2b918f">Q:&nbsp;</span>
+			<span><%= user.questions.questions[0].question %></span>
+		</div>
+
+		<div class="toggle-content" id="feedback">
+			<div class="flex">
+				<div id="your-response">
+					<h1>Your Response</h1>
+					<p class="loading-text">
+						
+					</p>
+					<p>
+
+					</p>
+				</div>
+
+				<hr class="rounded" />
+
+				<div id="custom-feedback">
+					<h1>Feedback</h1>
+					<p>
+						Your response provides a good overview of your responsibilities at
+						nwPlus. However, you could enhance clarity and confidence by
+						structuring your points more concisely and the avoiding filler words
+						"um" and "like. Also, consider elaborating a bit more on the impact
+						or results of the QR project to give a clearer picture of your
+						contributions.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<button class="toggle-content" id="next-question" onclick="nextQuestion()">
+			Finish
+		</button>
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script type="module" src="js/video.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+     	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
+		<script>
+
+			const startRecordingButton = document.getElementById('startBtn');
+			const stopRecordingButton = document.getElementById('submitBtn');
+			let mediaRecorder;
+			let audioChunks = [];
+
+			const audio = document.getElementById("music");
+			audio.pause();
+
+			window.onload = () => {
+				document.getElementById("startBtn").classList.remove("is-visible");
+				setTimeout(() => {
+					document.getElementById("interviewer").play();
+					audio.play();
+					audio.addEventListener("ended", () => {
+						document.getElementById("interviewer").pause();
+						document.getElementById("startBtn").classList.add("is-visible");
+					});
+				}, 2500);
+			}
+
+			startRecordingButton.addEventListener('click', startRecording);
+        	stopRecordingButton.addEventListener('click', stopRecording);
+
+			async function startRecording() {
+				document.getElementById("startBtn").classList.remove("is-visible");
+				document.getElementById("submitBtn").classList.add("is-visible");
+
+				setTimeout(detectFace(), 1000);
+
+				try {
+					const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+					mediaRecorder = new MediaRecorder(stream);
+
+					mediaRecorder.ondataavailable = (event) => {
+						if (event.data.size > 0) {
+							audioChunks.push(event.data);
+						}
+					};
+
+					mediaRecorder.onstop = async () => {
+						const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+						console.log(audioBlob);
+						const formData = new FormData();
+						formData.append('audio', audioBlob, 'recording.wav');
+
+						fetch('/audio/upload-audio', {
+							method: 'POST',
+							body: formData,
+						}).then(resp => resp.json())
+						.then(data => {
+							console.log(data);
+							if(data.success) {
+								document.getElementById("your-response").children[1].innerHTML = ""
+								document.getElementById("your-response").children[1].classList.remove("loading-text");
+								data.transcription.trim().toLowerCase().split(/\s+/).forEach(word => {
+									if(data.extraWordsInString1.includes(word)) {
+										document.getElementById("your-response").children[1].innerHTML += `<span style="background-color: #ff968f;">${word}</span> `;
+									} else {
+										document.getElementById("your-response").children[1].innerHTML += `${word} `;
+									}
+								})
+								document.getElementById("your-response").children[1].innerHTML += `<br><br>`
+								for (let index = 0; index < data.response.trim().toLowerCase().replace(/[,\.]/g, '').split(/\s+/).length; index++) {
+									const word = data.response.trim().toLowerCase().split(/\s+/)[index];
+									if(data.extraWordsInString2.includes(word)) {
+										document.getElementById("your-response").children[1].innerHTML += `<span style="background-color: #319795;">${data.response.trim().split(/\s+/)[index]}</span> `;
+									} else {
+										document.getElementById("your-response").children[1].innerHTML += `${data.response.trim().split(/\s+/)[index]} `;
+									}
+								}
+								document.getElementById("your-response").children[1].innerHTML += `<br><br>`
+								document.getElementById("your-response").children[1].innerHTML += `<b>Confidence: ${Math.ceil(data.confidence*100)}%</b>`
+							}
+						})
+						.catch((error) => {
+							console.error('Error:', error);
+						});
+					};
+
+					mediaRecorder.start();
+				} catch (error) {
+					console.error('Error accessing microphone:', error);
+				}
+
+			}
+
+			function stopRecording() {
+				if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+					mediaRecorder.stop();
+					audioChunks = [];
+				}
+				// document.getElementById("startBtn").classList.add("is-visible");
+				document.getElementById("submitBtn").classList.remove("is-visible");
+				document.getElementById("question").classList.add("is-visible");
+				document.getElementById("feedback").classList.add("is-visible");
+				document.getElementById("next-question").classList.add("is-visible");
+				minimize();
+			}
+
+			function minimize() {
+				const div = document.getElementById("interview-content");
+
+				// Scale down to 0.5 ratio
+				div.style.transform = "translate(-10%, 10%) scale(0.65)";
+
+				// Move to bottom left
+				div.style.width = "50vw";
+			}
+
+			function nextQuestion() {
+				// document.getElementById("startBtn").classList.add("is-visible");
+				// document.getElementById("submitBtn").classList.remove("is-visible");
+				// document.getElementById("question").classList.remove("is-visible");
+				// document.getElementById("feedback").classList.remove("is-visible");
+				// document.getElementById("next-question").classList.remove("is-visible");
+				// // Scale down to 0.5 ratio
+				// div.style.transform = "translate(0%, 00%) scale(1)";
+
+				// // Move to bottom left
+				// div.style.width = "100vw";
+				window.location.href = "/finished";
+			}
+
+			function dataURLtoBlob(dataURL) {
+			      const parts = dataURL.split(',');
+			      const contentType = parts[0].split(':')[1];
+			      const byteString = atob(parts[1]);
+
+			      const arrayBuffer = new ArrayBuffer(byteString.length);
+			      const uint8Array = new Uint8Array(arrayBuffer);
+
+			      for (let i = 0; i < byteString.length; i++) {
+			        uint8Array[i] = byteString.charCodeAt(i);
+			      }
+
+			      return new Blob([uint8Array], { type: contentType });
+			    }
+
+			// Handle the button click to capture an image
+			function detectFace() {
+				const canvas = document.createElement('canvas');
+				canvas.style.display = 'none';
+				const video = document.getElementById("webcam")
+				const context = canvas.getContext('2d');
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+				context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+				// Capture the current frame as an image
+			    const imageDataURL = canvas.toDataURL('image/png');
+
+			    const firebaseConfig = {
+			      apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+			      authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+			      projectId: "hackthenorth-ed2fa",
+			      storageBucket: "hackthenorth-ed2fa.appspot.com",
+			      messagingSenderId: "95447128297",
+			      appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+			      measurementId: "G-K1TGR981FM"
+			    };
+
+			    firebase.initializeApp(firebaseConfig);
+
+			    const fileName = `image_${Date.now()}.png`;
+			    const ref = firebase.storage().ref();
+			    const blob = dataURLtoBlob(imageDataURL);
+
+			    // Upload the Blob to Firebase Storage
+			    const task = ref.child(fileName).put(blob);
+
+			    task
+			    .then(snapshot => snapshot.ref.getDownloadURL())
+			    .then(url => {
+			        console.log(url);
+			        fetch(`/quiz/detectFace?f=${url}`, {
+			            method: 'GET',
+			        }).then((resp) => {
+			            return resp.json();
+			        }).then((data) => {
+			            console.log(data);
+						document.getElementById("your-response").children[2].innerHTML += `<b>Facial Expression: ${data.emotion}<b>`
+			        }).catch((error) => {
+			            console.error('Error:', error);
+			        });
+			    })
+			    .catch(err => console.log(err))
+		}
+		</script>
+	</body>
+</html>

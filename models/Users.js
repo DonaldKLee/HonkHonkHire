@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     audios: {
         type: Array,
     },
+    lastCompletedQuestion: {
+        type: Number,
+        default: -1,
+    },
     date: {
         type: Date,
         default: new Date,

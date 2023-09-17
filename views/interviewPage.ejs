@@ -35,79 +35,79 @@
 		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
 		<script>
-			// const captureButton = document.getElementById("captureButton");
-			// const videoElement = document.getElementById("videoElement");
-			// const canvasElement = document.getElementById("canvasElement");
-			// const capturedImage = document.getElementById("capturedImage");
+			const captureButton = document.getElementById("captureButton");
+			const videoElement = document.getElementById("videoElement");
+			const canvasElement = document.getElementById("canvasElement");
+			const capturedImage = document.getElementById("capturedImage");
 
-			// // Access the user's camera
-			// navigator.mediaDevices.getUserMedia({ video: true })
-			//     .then((stream) => {
-			//         videoElement.srcObject = stream;
-			//     })
-			//     .catch((error) => {
-			//         console.error('Error accessing camera:', error);
-			//     });
+			// Access the user's camera
+			navigator.mediaDevices.getUserMedia({ video: true })
+			    .then((stream) => {
+			        videoElement.srcObject = stream;
+			    })
+			    .catch((error) => {
+			        console.error('Error accessing camera:', error);
+			    });
 
-			//     function dataURLtoBlob(dataURL) {
-			//       const parts = dataURL.split(',');
-			//       const contentType = parts[0].split(':')[1];
-			//       const byteString = atob(parts[1]);
+			    function dataURLtoBlob(dataURL) {
+			      const parts = dataURL.split(',');
+			      const contentType = parts[0].split(':')[1];
+			      const byteString = atob(parts[1]);
 
-			//       const arrayBuffer = new ArrayBuffer(byteString.length);
-			//       const uint8Array = new Uint8Array(arrayBuffer);
+			      const arrayBuffer = new ArrayBuffer(byteString.length);
+			      const uint8Array = new Uint8Array(arrayBuffer);
 
-			//       for (let i = 0; i < byteString.length; i++) {
-			//         uint8Array[i] = byteString.charCodeAt(i);
-			//       }
+			      for (let i = 0; i < byteString.length; i++) {
+			        uint8Array[i] = byteString.charCodeAt(i);
+			      }
 
-			//       return new Blob([uint8Array], { type: contentType });
-			//     }
+			      return new Blob([uint8Array], { type: contentType });
+			    }
 
-			// // Handle the button click to capture an image
-			// captureButton.addEventListener('click', () => {
-			//     // Create a canvas to draw the video frame
-			//     // const context = canvasElement.getContext('2d');
-			//     // context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+			// Handle the button click to capture an image
+			captureButton.addEventListener('click', () => {
+			    // Create a canvas to draw the video frame
+			    // const context = canvasElement.getContext('2d');
+			    // context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
 
-			//     // Capture the current frame as an image
-			//     const imageDataURL = canvasElement.toDataURL('image/png');
+			    // Capture the current frame as an image
+			    const imageDataURL = canvasElement.toDataURL('image/png');
 
-			//     const firebaseConfig = {
-			//       apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
-			//       authDomain: "hackthenorth-ed2fa.firebaseapp.com",
-			//       projectId: "hackthenorth-ed2fa",
-			//       storageBucket: "hackthenorth-ed2fa.appspot.com",
-			//       messagingSenderId: "95447128297",
-			//       appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
-			//       measurementId: "G-K1TGR981FM"
-			//     };
+			    const firebaseConfig = {
+			      apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+			      authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+			      projectId: "hackthenorth-ed2fa",
+			      storageBucket: "hackthenorth-ed2fa.appspot.com",
+			      messagingSenderId: "95447128297",
+			      appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+			      measurementId: "G-K1TGR981FM"
+			    };
 
-			//     firebase.initializeApp(firebaseConfig);
+			    firebase.initializeApp(firebaseConfig);
 
-			//     const fileName = `image_${Date.now()}.png`;
-			//     const ref = firebase.storage().ref();
-			//     const blob = dataURLtoBlob(imageDataURL);
+			    const fileName = `image_${Date.now()}.png`;
+			    const ref = firebase.storage().ref();
+			    const blob = dataURLtoBlob(imageDataURL);
 
-			//     // Upload the Blob to Firebase Storage
-			//     const task = ref.child(fileName).put(blob);
+			    // Upload the Blob to Firebase Storage
+			    const task = ref.child(fileName).put(blob);
 
-			//     task
-			//     .then(snapshot => snapshot.ref.getDownloadURL())
-			//     .then(url => {
-			//         console.log(url);
-			//         fetch(`/quiz/detectFace?f=${url}`, {
-			//             method: 'GET',
-			//         }).then((resp) => {
-			//             return resp.json();
-			//         }).then((data) => {
-			//             console.log(data);
-			//         }).catch((error) => {
-			//             console.error('Error:', error);
-			//         });
-			//     })
-			//     .catch(err => console.log(err))
-			// });
+			    task
+			    .then(snapshot => snapshot.ref.getDownloadURL())
+			    .then(url => {
+			        console.log(url);
+			        fetch(`/quiz/detectFace?f=${url}`, {
+			            method: 'GET',
+			        }).then((resp) => {
+			            return resp.json();
+			        }).then((data) => {
+			            console.log(data);
+			        }).catch((error) => {
+			            console.error('Error:', error);
+			        });
+			    })
+			    .catch(err => console.log(err))
+			});
 		</script>
 	</body>
 </html>

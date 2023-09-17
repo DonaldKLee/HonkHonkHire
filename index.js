@@ -64,13 +64,18 @@ app.get("/newInterview", (req, res) => {
 });
 
 app.get("/interview", (req, res) => {
-	// Users.findOne({email: req.session.user.email})
-	// .then(user => {
-	// 	res.render("interviewPage", {user: user});
-	// })
-	// .catch(err => console.log(err));
-	res.render("interviewPage");
+	Users.findOne({ email: req.session.user.email })
+	.then(user => {
+		res.render("interview", {user});
+		user.lastCompletedQuestion += 1;
+		user.save();
+	})
+	.catch(err => console.log(err));
 });
+
+app.get("/finished", (req, res) => {
+	res.render("finishedPage");
+})
 
 app.get("/dashboard", (req, res) => {
 	Users.findOne({ email: req.session.user.email })
@@ -87,10 +92,6 @@ app.get("/finished", (req, res) => {
 
 app.get("/interviewSummary", (req, res) => {
 	res.render("interviewSummary.ejs");
-});
-
-app.get("/temp", (req, res) => {
-	res.render("tempPage.ejs");
 });
 
 app.get("/audio", (req, res) => {

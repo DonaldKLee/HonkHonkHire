@@ -28,9 +28,6 @@ router.get('/uploadResume', async (req, res) => {
             });
 
             let context = `I am working for the ${ans0} industry, am applying for a ${ans2} ${ans1} role. I am most interested in improving on: ${ans3}. No questions asked.`
-            // console.log(context);
-
-            // code works, put this for interview
             // const cohere = require('cohere-ai');
             // cohere.init(process.env.COHERE_KEY); // This is your trial API key
             // (async () => {
@@ -57,13 +54,58 @@ router.get('/uploadResume', async (req, res) => {
 
                 user.save()
                 .then((resp) => {
-                    console.log("Questions saved!");
+                    console.log("OnBoarded");
                     res.json({
                         success: true,
                     });
+                });
+            })
+        });
+})
+
+router.get('/newInterview', async (req, res) => {
+    const numberOfQuestions = req.query.q;
+
+    Users.findOne({email: req.session.user.email})
+        .then(async (user) => {
+            user.numberOfQuestions = numberOfQuestions;
+            let resumeText = user.resumeText;
+            let context = user.context;
+
+            // const cohere = require('cohere-ai');
+            // cohere.init(process.env.COHERE_KEY); // This is your trial API key
+            // (async () => {
+            // const response = await cohere.generate({
+            //     model: 'command',
+            //     prompt: `Generate a list of ${numberOfQuestions} interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": "<question-goes here>"\n            }\n      ]\n}\n\nHere is some context: ${context}\nHere is my resume:\n${resumeText}`,
+            //     max_tokens: 740,
+            //     temperature: 1.2,
+            //     k: 0,
+            //     stop_sequences: [],
+            //     return_likelihoods: 'NONE'
+            // });
+
+            Users.findOne({email: req.session.user.email})
+            .then(async (user) => {
+                // console.log(user);
+                user.questions = {
+                    "questions": [
+                        {
+                            "question": "What are your technical strengths and how did you apply them in your projects?"
+                        },
+                        {
+                            "question": "Can you describe the QR code app you made for nwPlus?"
+                        },
+                        {
+                            "question": "How do you keep yourself up-to-date with the latest technologies and what are your favorite resources for this?"
+                        }
+                    ]
+                }
+                user.save()
+                .then(() => {
+                    console.log("Questions saved!");
 
                     var admin = require("firebase-admin");
-
                     var serviceAccount = require("../firebase_creds.json");
 
                     admin.initializeApp({
@@ -89,9 +131,9 @@ router.get('/uploadResume', async (req, res) => {
 
                     const audios = [];
 
-                    async function uploadFile() {
-                        const filePath = 'output.mp3'; // Replace with the actual file path
-                        const fileName = `${new Date}-output.mp3`;
+                    async function uploadFile(index) {
+                        const filePath = `audios/output-${index}.mp3`; // Replace with the actual file path
+                        const fileName = `${new Date}-output-${index}.mp3`;
     
                         await bucket.upload(filePath, {
                             destination: fileName,
@@ -113,13 +155,16 @@ router.get('/uploadResume', async (req, res) => {
                             user.save()
                             .then((resp) => {
                                 console.log("Audios saved!");
+                                res.json({
+                                    success: true,
+                                });
                             })
                             .catch(err => console.log(err));
                         }
                     }
     
 
-                    async function quickStart(text) {
+                    async function quickStart(text, index) {
                         // Construct the request
                         const request = {
                           input: {text: text},
@@ -133,58 +178,22 @@ router.get('/uploadResume', async (req, res) => {
                         const [response] = await ttsclient.synthesizeSpeech(request);
                         // Write the binary audio content to a local file
                         const writeFile = util.promisify(fs.writeFile);
-                        await writeFile('output.mp3', response.audioContent, 'binary');
+                        await writeFile(`audios/output-${index}.mp3`, response.audioContent, 'binary');
 
-                        uploadFile()
+                        uploadFile(index)
                         .catch(console.error);
                     }
 
                     for(let i = 0; i < user.questions.questions.length; i++) {
-                        quickStart(user.questions.questions[i].question);
+                        quickStart(user.questions.questions[i].question, i);
                     }
                 })
                 .catch(err => console.log(err));
             })
-            .catch(err => console.log(err));;
-        });
-})
-
-router.get('/newInterview', async (req, res) => {
-    const numberOfQuestions = req.query.q;
-
-    Users.findOne({email: req.session.user.email})
-        .then(async (user) => {
-            user.numberOfQuestions = numberOfQuestions;
-            let resumeText = user.resumeText;
-            let context = user.context;
-
-            // console.log(`Generate a list of ${numberOfQuestions} interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}\n\nHere is some context: ${context}\nHere is my resume:\n${resumeText}`)
-            // get user resume and context
-            const cohere = require('cohere-ai');
-            cohere.init(process.env.COHERE_KEY); // This is your trial API key
-            (async () => {
-            const response = await cohere.generate({
-                model: 'command',
-                prompt: `Generate a list of ${numberOfQuestions} interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}\n\nHere is some context: ${context}\nHere is my resume:\n${resumeText}`,
-                max_tokens: 300,
-                temperature: 0.9,
-                k: 0,
-                stop_sequences: [],
-                return_likelihoods: 'NONE'
-              });
-            //   console.log(`Prediction: ${response.body.generations[0].text}`);
-              user.questions = response.body.generations[0].text;
-              user.save()
-              .then((resp) => {
-                  console.log("Questions saved!");
-                  res.json({
-                      success: true,
-                  });
-              })
-              console.log("Questions generated!")
-            })();
-        })
+            .catch(err => console.log(err));
+            });
 });
+
 
 router.get('/detectFace',async (req, res) => {
     const fileUrl = req.query.f;
@@ -192,11 +201,33 @@ router.get('/detectFace',async (req, res) => {
     const faces = result.faceAnnotations;
     console.log('Faces:');
     faces.forEach((face, i) => {
-        console.log(`  Face #${i + 1}:`);
-        console.log(`    Joy: ${face.joyLikelihood}`);
-        console.log(`    Anger: ${face.angerLikelihood}`);
-        console.log(`    Sorrow: ${face.sorrowLikelihood}`);
-        console.log(`    Surprise: ${face.surpriseLikelihood}`);
+        console.log(face)
+        if (face.joyLikelihood === 'VERY_LIKELY' || face.joyLikelihood === 'LIKELY' || face.joyLikelihood === 'POSSIBLE') {
+            res.json({
+                success: true,
+                emotion: "Joy"
+            });
+        } else if (face.angerLikelihood === 'VERY_LIKELY' || face.angerLikelihood === 'LIKELY' || face.angerLikelihood === 'POSSIBLE') {
+            res.json({
+                success: true,
+                emotion: "Anger"
+            });
+        } else if (face.sorrowLikelihood === 'VERY_LIKELY' || face.sorrowLikelihood === 'LIKELY' || face.sorrowLikelihood === 'POSSIBLE') {
+            res.json({
+                success: true,
+                emotion: "Sorrow"
+            });
+        } else if (face.surpriseLikelihood === 'VERY_LIKELY' || face.surpriseLikelihood === 'LIKELY' || face.surpriseLikelihood === 'POSSIBLE') {
+            res.json({
+                success: true,
+                emotion: "Surprise"
+            });
+        } else {
+            res.json({
+                success: true,
+                emotion: "Joy"
+            });
+        }
     });
 })
 

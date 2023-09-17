@@ -26,13 +26,20 @@ html {
   border-radius: 20px;
 }
 
-#videoElement {
+#webcam {
   display: flex;
   align-self: center;
   width: 100vw;
   height: 100vh;
   background-color: black;
   border-radius: 20px;
+}
+
+#canvas_output{
+  display: flex;
+  align-self: center;
+  width: 100vw;
+  height: 100vh;
 }
 
 .control-response {
@@ -78,6 +85,11 @@ html {
 .feedback {
   display: flex;
   flex-direction: row;
+}
+
+.notyf__toast{
+  border-radius: 10px !important;
+  padding-right: 5px !important;
 }
 
 #question {
@@ -154,6 +166,30 @@ hr.rounded {
   border-top: 2px solid #D5D5D5;
   border-radius: 5px;
   margin: 20px 0px
+}
+
+@keyframes dots {
+  0%, 20% {
+      content: "Waiting for response";
+  }
+  40% {
+      content: "Waiting for response.";
+  }
+  60% {
+      content: "Waiting for response..";
+  }
+  80% {
+      content: "Waiting for response...";
+  }
+}
+
+/* Apply the animation to an element */
+.loading-text::after {
+  content: "Waiting for response";
+  margin: auto;
+  font-size: 20px;
+  animation: dots 2s infinite;
+  display: inline-block;
 }
 
 @-webkit-keyframes fadeInFromNone {
