@@ -37,11 +37,19 @@
       </div>
   </div>
 
+  <div id="loading" style="display: none">
+    <img class="gooseGifLoad" src="/assets/gooseLoading.mp4" />
+    <h2 class="loadText">Please wait while we generate some questions ...</h2>
+  </div>
+
   <script>
     // function newInterview() {
     //   window.location.href = "/interview";
     // }
     function selectInterview(numberOfQuestions) {
+      // displays loading
+
+
       fetch(`/quiz/newInterview?q=${numberOfQuestions}`, {
         method: 'GET'
       }).then((resp) => {
