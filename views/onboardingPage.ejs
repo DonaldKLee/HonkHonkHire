@@ -134,9 +134,9 @@
 
       <div class="step" style="align-items: center;">
         <img class="logo" src="/assets/logogoose.svg" alt="logo">
-        <h1 id="getStarted">Let's get started!</h1>
+        <h1 id="getStarted">You're all set-up!</h1>
         <h2 id="access">Enable microphone and camera access</h1>
-        <button id="readyBtn" onclick="submitOnboarding()">I'm ready!</button>
+        <button id="readyBtn" onclick="submitOnboarding()">View Dashboard</button>
       </div>
     </div>
   </div>
@@ -186,7 +186,7 @@
         })
         .catch(err => console.log(err))
 
-        // window.location.href = "/interview"
+        window.location.href = "/dashboard"
     };
 
     var currStep = 0;

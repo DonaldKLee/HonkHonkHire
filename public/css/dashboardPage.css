@@ -1,0 +1,123 @@
+html {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.bg {
+  position: absolute;
+  width: 30vh;
+  margin: 0;
+  z-index: -1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 60px 80px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#welcome {
+  text-align: center;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  margin-bottom: 32px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.level {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-color: #C0DAD7;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 12px;
+  padding: 4px 8px;
+  margin-right: 20px;
+}
+
+.levelImg {
+  width: 50px;
+  height: 50px;
+  background-color: #F2F9F9;
+  border-radius: 50%;
+  padding: 12px;
+  margin-right: 8px;
+}
+
+.levelDescription {
+  text-align: center;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+}
+
+#newInterview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 12px;
+  border-width: 2px;
+  border-color: #5835A7;
+  background-color: #805AD5;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  padding: 0px 16px;
+}
+
+.pastInterviews {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 10%;
+  margin-bottom: 20px;
+}
+
+#pastInterview {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-left: 20px;
+}
+
+.filter {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #319795;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 5%;
+}
+
+.interview {
+  padding: 32px 28px;
+  background-color: #f4f4f4;
+  border-radius: 24px;
+  border-color: #d5d5d5;
+  border-width: 2px;
+  border-style: solid;
+  font-size: 20px;
+}
