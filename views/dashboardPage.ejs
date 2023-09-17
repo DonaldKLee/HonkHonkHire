@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Page</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/dashboardPage.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="content">
+    <img src="/assets/step5bgtr.svg" alt="background" class="bg" style="right: 0; top: 0;">
+    <img src="/assets/step5bgbl.svg" alt="background" class="bg" style="bottom: 0; left: 0;">
+    <div class="header">
+      <img src="/assets/logogoose.svg" alt="logo" />
+    </div>
+    <h1 id="welcome">Welcome back, User!</h3>
+      <div class="buttons">
+        <div class="level">
+          <img src="/assets/hatchling.svg" alt="profile" class="levelImg" />
+          <div class="levelDescription">
+            <p style="font-size: 10px; color: #92BFBF; margin-bottom: 4px;">LEVEL 02</p>
+            <p style="font-size: 16px; color: #2B918F;">Hatchling</p>
+          </div>
+        </div>
+        <button id="newInterview">
+          <img src="/assets/addIcon.svg" alt="add icon" style="width: 20px; margin-right: 8px;" />
+          <h3>New Interview</h3>
+        </button>
+      </div>
+      <div class="pastInterviews">
+        <div class="header">
+          <h1 id="pastInterview">Past Interviews</h1>
+          <div class="filter">
+            <h1>Sort by</h1>
+            <h1 style="margin-left: 20px;">Filter</h1>
+          </div>
+        </div>
+        <div class="history">
+          <h1 class="interview">No past interviews to display.</h1>
+        </div>
+      </div>
+  </div>
+</body>
+
+</html>
