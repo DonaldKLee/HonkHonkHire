@@ -52,6 +52,10 @@ app.get("/interview", (req, res) => {
 	res.render("interviewPage.ejs");
 });
 
+app.get("/interviewSummary", (req, res) => {
+	res.render("interviewSummary.ejs");
+});
+
 app.get("/audio", (req, res) => {
 	const audioUrl = req.query.a;
 	console.log(audioUrl);
