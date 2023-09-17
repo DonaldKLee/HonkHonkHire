@@ -29,7 +29,7 @@
             <p style="font-size: 16px; color: #2B918F;">Hatchling</p>
           </div>
         </div>
-        <button id="newInterview">
+        <button id="newInterview" onclick="newInterview()">
           <img src="/assets/addIcon.svg" alt="add icon" style="width: 20px; margin-right: 8px;" />
           <h3>New Interview</h3>
         </button>
@@ -47,6 +47,12 @@
         </div>
       </div>
   </div>
+
+  <script>
+    function newInterview() {
+      window.location.href = "/interview";
+    }
+  </script>
 </body>
 
 </html>
