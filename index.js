@@ -73,7 +73,12 @@ app.get("/interview", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-	res.render("dashboardPage.ejs");
+	Users.findOne({ email: req.session.user.email })
+	.then((user) => {
+		// console.log(user["name"]);
+		res.render("dashboardPage", { name: user["name"] });
+	})
+	.catch((err) => console.log(err));
 });
 
 app.get("/finished", (req, res) => {

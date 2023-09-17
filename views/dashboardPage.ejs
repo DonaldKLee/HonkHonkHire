@@ -52,6 +52,13 @@
     function newInterview() {
       window.location.href = "/newInterview";
     }
+
+    function addUserName() {
+      let userName = "<%= name %>";
+      document.getElementById("welcome").textContent = `Welcome back, ${userName.split(" ")[0]}!`;
+    }
+
+    addUserName()
   </script>
 </body>
 
