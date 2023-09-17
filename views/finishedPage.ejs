@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>results Page</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/finishedPage.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="top-right">
+    <img src="/assets/step5bgtr.svg" alt="background" class="bg" style="right: 0; top: 0;">
+  </div>
+
+  <div class="bottom-left">
+    <img src="/assets/step5bgbl.svg" alt="background" class="bg" style="bottom: 0; left: 0;">
+  </div>
+
+  <div class="center-both">
+    <img class="logogoose" src="assets/flyinggoose.svg" alt="flyinggoose" />
+    <h1 id="getStarted">Great work!</h1>
+    <h2 id="access">You’re ready to ace your next interview.</h1>
+      <button id="readyBtn" onclick="gotoDashboard()">View Summary</button>
+  </div>
+
+  <script>
+    function gotoDashboard() {
+      window.location.href = "/dashboard"
+    }
+  </script>
+</body>
+
+</html>

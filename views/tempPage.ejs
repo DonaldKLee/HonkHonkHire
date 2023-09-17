@@ -82,6 +82,7 @@
 		</button>
 
 		<script>
+			var questionCount = 0;
 			const videoElement = document.getElementById("videoElement");
 
 			navigator.mediaDevices
@@ -120,6 +121,13 @@
 			}
 
 			function nextQuestion() {
+				if (
+					questionCount > 1 &&
+					document.getElementById("next-question").innerHTML == "End Interview"
+				) {
+					console.log("asldkfj");
+					window.location.href = "/finished";
+				}
 				document.getElementById("startBtn").classList.add("is-visible");
 				document.getElementById("submitBtn").classList.remove("is-visible");
 				document.getElementById("question").classList.remove("is-visible");
@@ -135,6 +143,12 @@
 				div.style.width = "100vw";
 
 				document.getElementById("interviewer").play();
+
+				if (questionCount > 0) {
+					document.getElementById("next-question").innerHTML = "End Interview";
+				}
+
+				questionCount++;
 			}
 		</script>
 	</body>
