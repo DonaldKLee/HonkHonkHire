@@ -29,24 +29,32 @@ router.get('/uploadResume', async (req, res) => {
 
             let context = `I am working for the ${ans0} industry, am applying for a ${ans2} ${ans1} role. I am most interested in improving on: ${ans3}. No questions asked.`
             // console.log(context);
-            const cohere = require('cohere-ai');
-            cohere.init(process.env.COHERE_KEY); // This is your trial API key
-            (async () => {
-            const response = await cohere.generate({
-                model: 'command',
-                prompt: `${resumeText}\n${context}\nGenerate a list of 5 interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}`,
-                max_tokens: 740,
-                temperature: 0,
-                k: 0,
-                stop_sequences: [],
-                return_likelihoods: 'NONE'
-            });
 
-            console.log(`Prediction: ${response.body.generations[0].text}`);
+            // code works, put this for interview
+            // const cohere = require('cohere-ai');
+            // cohere.init(process.env.COHERE_KEY); // This is your trial API key
+            // (async () => {
+            // const response = await cohere.generate({
+            //     model: 'command',
+            //     prompt: `${resumeText}\n${context}\nGenerate a list of 5 interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}`,
+            //     max_tokens: 740,
+            //     temperature: 0,
+            //     k: 0,
+            //     stop_sequences: [],
+            //     return_likelihoods: 'NONE'
+            // });
+            // console.log(`Prediction: ${response.body.generations[0].text}`);
+
             Users.findOne({email: req.session.user.email})
             .then(async (user) => {
                 // console.log(user);
-                user.questions = await JSON.parse(response.body.generations[0].text);
+                // user.questions = await JSON.parse(response.body.generations[0].text);
+                user.onboarding = true;
+                user.resumeText = resumeText;
+                user.context = context;
+                
+                // user.prompt = `${resumeText}\n${context}\nGenerate a list of 5 interview questions based on this resume and the context and provide the output in the following JSON format:\n{\n    \"questions\":[\n            {\n                 \"question\": \""What are your technical strengths and how did you apply them in your projects?"\n            }\n      ]\n}`;
+
                 user.save()
                 .then((resp) => {
                     console.log("Questions saved!");
@@ -56,7 +64,7 @@ router.get('/uploadResume', async (req, res) => {
 
                     var admin = require("firebase-admin");
 
-                    var serviceAccount = require("D:\\Giga-bite pro\\Codimg\\Hack-The-North-2023\\firebase_creds.json");
+                    var serviceAccount = require("../firebase_creds.json");
 
                     admin.initializeApp({
                         credential: admin.credential.cert(serviceAccount),
@@ -137,10 +145,29 @@ router.get('/uploadResume', async (req, res) => {
                 })
                 .catch(err => console.log(err));
             })
-            .catch(err => console.log(err));
-            })();
-
+            .catch(err => console.log(err));;
         });
+})
+
+router.get('/newInterview', async (req, res) => {
+    const numberOfQuestions = req.query.q;
+    console.log(numberOfQuestions);
+    Users.findOne({email: req.session.user.email})
+        .then(async (user) => {
+            user.numberOfQuestions = numberOfQuestions;
+            
+            // get user resume and context
+
+            // get cohere to ask questions
+
+            user.save()
+            .then((resp) => {
+                console.log("Questions saved!");
+                res.json({
+                    success: true,
+                });
+            })
+        })
 })
 
 router.get('/detectFace',async (req, res) => {

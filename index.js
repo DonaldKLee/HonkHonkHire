@@ -48,15 +48,28 @@ app.get("/", (req, res) => {
 });
 
 app.get("/onboarding", (req, res) => {
-	res.render("onboardingPage");
+	Users.findOne({ email: req.session.user.email })
+		.then((user) => {
+			res.render("onboardingPage", { user: user });
+		})
+		.catch((err) => console.log(err));
+});
+
+app.get("/newInterview", (req, res) => {
+	Users.findOne({ email: req.session.user.email })
+		.then((user) => {
+			res.render("newIntervewPage", { user: user });
+		})
+		.catch((err) => console.log(err));
 });
 
 app.get("/interview", (req, res) => {
-	Users.findOne({ email: req.session.user.email })
-		.then((user) => {
-			res.render("interviewPage", { user: user });
-		})
-		.catch((err) => console.log(err));
+	// Users.findOne({email: req.session.user.email})
+	// .then(user => {
+	// 	res.render("interviewPage", {user: user});
+	// })
+	// .catch(err => console.log(err));
+	res.render("interviewPage");
 });
 
 app.get("/dashboard", (req, res) => {

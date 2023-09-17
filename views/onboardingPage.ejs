@@ -146,48 +146,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
 
   <script>
-    function submitOnboarding() {
-      resumeFile = document.getElementById("resumeInput").files[0];
-
-      console.log(step0ans, step1ans, step2ans, step3ans, resumeFile.name);
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
-        authDomain: "hackthenorth-ed2fa.firebaseapp.com",
-        projectId: "hackthenorth-ed2fa",
-        storageBucket: "hackthenorth-ed2fa.appspot.com",
-        messagingSenderId: "95447128297",
-        appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
-        measurementId: "G-K1TGR981FM"
-      };
-
-      firebase.initializeApp(firebaseConfig);
-
-      const ref = firebase.storage().ref();
-      const name = `${new Date}-${resumeFile.name}`
-      const metadata = {
-        contentType: resumeFile.type
-      }
-      const pdfFile = ref.child(name).put(resumeFile, metadata)
-
-      pdfFile
-        .then(snapshot => snapshot.ref.getDownloadURL())
-        .then(url => {
-          console.log(url);
-          fetch(`/quiz/uploadResume?r=${url}&ans0=${step0ans}&ans1=${step1ans}&ans2=${step2ans}&ans3=${step3ans}`, {
-            method: 'GET',
-          }).then((resp) => {
-            return resp.json();
-          }).then((data) => {
-            console.log(data);
-          }).catch((error) => {
-            console.error('Error:', error);
-          });
-        })
-        .catch(err => console.log(err))
-
-        window.location.href = "/dashboard"
-    };
 
     var currStep = 0;
     var step0ans = ""
@@ -248,7 +206,53 @@
       elem.classList.toggle('is-visible');
     };
   </script>
+  <script>
+        function submitOnboarding() {
+          resumeFile = document.getElementById("resumeInput").files[0];
 
+          console.log(step0ans, step1ans, step2ans, step3ans, resumeFile.name);
+
+          const firebaseConfig = {
+            apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+            authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+            projectId: "hackthenorth-ed2fa",
+            storageBucket: "hackthenorth-ed2fa.appspot.com",
+            messagingSenderId: "95447128297",
+            appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+            measurementId: "G-K1TGR981FM"
+          };
+
+          
+          // console.log(userData);
+          firebase.initializeApp(firebaseConfig);
+
+          const ref = firebase.storage().ref();
+          const name = `${new Date}-${resumeFile.name}`
+          const metadata = {
+            contentType: resumeFile.type
+          }
+          const pdfFile = ref.child(name).put(resumeFile, metadata)
+
+          pdfFile
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+              console.log(url);
+              fetch(`/quiz/uploadResume?r=${url}&ans0=${step0ans}&ans1=${step1ans}&ans2=${step2ans}&ans3=${step3ans}`, {
+                method: 'GET',
+              }).then((resp) => {
+                window.location.href = "/dashboard";
+                return resp.json();
+              }).then((data) => {
+                console.log(data);
+              }).catch((error) => {
+                console.error('Error:', error);
+              });
+            })
+            .catch(err => console.log(err))
+
+            // window.location.href = "/dashboard"
+    };
+  </script>
 </body>
 
 </html>

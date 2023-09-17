@@ -26,6 +26,26 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: new Date,
     },
+    onboarding: {
+        type: Boolean,
+        default: false,
+    },
+    prompt: {
+        type: String,
+        default: "",
+    },
+    numberOfQuestions: {
+        type: Number,
+        default: 3,
+    },
+    resumeText: {
+        type: String,
+        default: "",
+    },
+    context: {
+        type: String,
+        default: "",
+    }
 })
 
 const Users = mongoose.model('Users', userSchema);
