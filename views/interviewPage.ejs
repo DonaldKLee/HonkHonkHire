@@ -14,6 +14,18 @@
 		/>
 	</head>
 	<body>
+		<img
+			src="/assets/step5bgtr.svg"
+			alt="background"
+			class="bg"
+			style="right: 0; top: 0"
+		/>
+		<img
+			src="/assets/step5bgbl.svg"
+			alt="background"
+			class="bg"
+			style="bottom: 0; left: 0"
+		/>
 		<div class="content">
 			<button id="captureButton">Capture Image</button>
 			<video id="videoElement" autoplay></video>
@@ -29,74 +41,74 @@
 			const canvasElement = document.getElementById("canvasElement");
 			const capturedImage = document.getElementById("capturedImage");
 
-        // // Access the user's camera
-        // navigator.mediaDevices.getUserMedia({ video: true })
-        //     .then((stream) => {
-        //         videoElement.srcObject = stream;
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error accessing camera:', error);
-        //     });
+			// // Access the user's camera
+			// navigator.mediaDevices.getUserMedia({ video: true })
+			//     .then((stream) => {
+			//         videoElement.srcObject = stream;
+			//     })
+			//     .catch((error) => {
+			//         console.error('Error accessing camera:', error);
+			//     });
 
-        //     function dataURLtoBlob(dataURL) {
-        //       const parts = dataURL.split(',');
-        //       const contentType = parts[0].split(':')[1];
-        //       const byteString = atob(parts[1]);
+			//     function dataURLtoBlob(dataURL) {
+			//       const parts = dataURL.split(',');
+			//       const contentType = parts[0].split(':')[1];
+			//       const byteString = atob(parts[1]);
 
-        //       const arrayBuffer = new ArrayBuffer(byteString.length);
-        //       const uint8Array = new Uint8Array(arrayBuffer);
+			//       const arrayBuffer = new ArrayBuffer(byteString.length);
+			//       const uint8Array = new Uint8Array(arrayBuffer);
 
-        //       for (let i = 0; i < byteString.length; i++) {
-        //         uint8Array[i] = byteString.charCodeAt(i);
-        //       }
+			//       for (let i = 0; i < byteString.length; i++) {
+			//         uint8Array[i] = byteString.charCodeAt(i);
+			//       }
 
-        //       return new Blob([uint8Array], { type: contentType });
-        //     }
+			//       return new Blob([uint8Array], { type: contentType });
+			//     }
 
-        // // Handle the button click to capture an image
-        // captureButton.addEventListener('click', () => {
-        //     // Create a canvas to draw the video frame
-        //     // const context = canvasElement.getContext('2d');
-        //     // context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+			// // Handle the button click to capture an image
+			// captureButton.addEventListener('click', () => {
+			//     // Create a canvas to draw the video frame
+			//     // const context = canvasElement.getContext('2d');
+			//     // context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
 
-        //     // Capture the current frame as an image
-        //     const imageDataURL = canvasElement.toDataURL('image/png');
-            
-        //     const firebaseConfig = {
-        //       apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
-        //       authDomain: "hackthenorth-ed2fa.firebaseapp.com",
-        //       projectId: "hackthenorth-ed2fa",
-        //       storageBucket: "hackthenorth-ed2fa.appspot.com",
-        //       messagingSenderId: "95447128297",
-        //       appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
-        //       measurementId: "G-K1TGR981FM"
-        //     };
+			//     // Capture the current frame as an image
+			//     const imageDataURL = canvasElement.toDataURL('image/png');
 
-        //     firebase.initializeApp(firebaseConfig);
+			//     const firebaseConfig = {
+			//       apiKey: "AIzaSyBXA0ZXlNgdgZfKK4yjnmjuQpc78lBAiog",
+			//       authDomain: "hackthenorth-ed2fa.firebaseapp.com",
+			//       projectId: "hackthenorth-ed2fa",
+			//       storageBucket: "hackthenorth-ed2fa.appspot.com",
+			//       messagingSenderId: "95447128297",
+			//       appId: "1:95447128297:web:52a1e7256c70e82b9c7878",
+			//       measurementId: "G-K1TGR981FM"
+			//     };
 
-        //     const fileName = `image_${Date.now()}.png`;
-        //     const ref = firebase.storage().ref();
-        //     const blob = dataURLtoBlob(imageDataURL);
+			//     firebase.initializeApp(firebaseConfig);
 
-        //     // Upload the Blob to Firebase Storage
-        //     const task = ref.child(fileName).put(blob);
+			//     const fileName = `image_${Date.now()}.png`;
+			//     const ref = firebase.storage().ref();
+			//     const blob = dataURLtoBlob(imageDataURL);
 
-        //     task
-        //     .then(snapshot => snapshot.ref.getDownloadURL())
-        //     .then(url => {
-        //         console.log(url);
-        //         fetch(`/quiz/detectFace?f=${url}`, {
-        //             method: 'GET',
-        //         }).then((resp) => {
-        //             return resp.json();
-        //         }).then((data) => {
-        //             console.log(data);
-        //         }).catch((error) => {
-        //             console.error('Error:', error);
-        //         });
-        //     })
-        //     .catch(err => console.log(err))
-        // });
-    </script>
-</body>
+			//     // Upload the Blob to Firebase Storage
+			//     const task = ref.child(fileName).put(blob);
+
+			//     task
+			//     .then(snapshot => snapshot.ref.getDownloadURL())
+			//     .then(url => {
+			//         console.log(url);
+			//         fetch(`/quiz/detectFace?f=${url}`, {
+			//             method: 'GET',
+			//         }).then((resp) => {
+			//             return resp.json();
+			//         }).then((data) => {
+			//             console.log(data);
+			//         }).catch((error) => {
+			//             console.error('Error:', error);
+			//         });
+			//     })
+			//     .catch(err => console.log(err))
+			// });
+		</script>
+	</body>
 </html>

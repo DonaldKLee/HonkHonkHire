@@ -30,7 +30,7 @@
           </div>
         </div>
         <button id="newInterview">
-          <img src="/assets/addIcon.svg" alt="add icon" style="width: 20px; margin-right: 8px;" />
+          <img src="/assets/addIcon.svg" alt="add icon" style="width: 20px; margin-right: 8px;" onclick="newInterview()" />
           <h3>New Interview</h3>
         </button>
       </div>
@@ -47,6 +47,12 @@
         </div>
       </div>
   </div>
+
+  <script>
+    function newInterview() {
+      window.location.href = "/interview";
+    }
+  </script>
 </body>
 
 </html>

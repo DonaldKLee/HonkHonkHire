@@ -5,58 +5,155 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Interview Summary</title>
 		<link rel="stylesheet" href="css/interviewSummary.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Inter:wght@600&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
+
 	<body>
-        <div class="step" style="align-items: center;">
-            <img class="logo" src="/assets/logogoose.svg" alt="logo">
-        </div>
-        <div class="titleContainer">
-            <h1>Today's interview</h1>
-            <!-- Placeholder -->
-            <p>Saturday September 16th, 1:32pm</p>
-        </div>
-        <div class="statContainer">
-            <div class="left">
-                <h3>Average Response Metrics</h3>
-            </div>
-            <div class="right">
-                <div class="centerStatBox">
-                    <div class="stat">
-                        <p>Filter words <span style="width:10px; height:10px; display: inline-block; background:#F55E52; border-radius:50%;"></span></p>
-                        <h2>14%</h2>
-                    </div>
-                    <div class="stat">
-                        <p>Pace (wpm) <span style="width:10px; height:10px; display: inline-block; background:#59C490; border-radius:50%;"></span></p>
-                        <h2>149</h2>
-                    </div>
-                    <div class="stat">
-                        <p>Duration (s) <span style="width:10px; height:10px; display: inline-block; background:#59C490; border-radius:50%;"></span></p>
-                        <h2>127</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<img
+			src="/assets/step5bgtr.svg"
+			alt="background"
+			class="bg"
+			style="right: 0; top: 0"
+		/>
+		<img
+			src="/assets/step5bgbl.svg"
+			alt="background"
+			class="bg"
+			style="bottom: 0; left: 0"
+		/>
 
-        <div class="transcriptContainer">
-            <h1 class="transcriptTitle">Transcript</h1>
+		<div class="step" style="align-items: center">
+			<img class="logo" src="/assets/logogoose.svg" alt="logo" />
+		</div>
+		<div class="titleContainer">
+			<h1 id="title">Today's Interview</h1>
+			<!-- Placeholder -->
+			<p style="margin-top: 4px">Saturday September 16th, 1:32pm</p>
+		</div>
+		<div class="statContainer" style="margin-top: 40px">
+			<div class="left">
+				<h3 style="font-size: 26px">Average Response Metrics</h3>
+			</div>
+			<div class="right">
+				<div class="centerStatBox">
+					<div class="stat">
+						<p>
+							Filter words
+							<span
+								style="
+									width: 10px;
+									height: 10px;
+									display: inline-block;
+									background: #f55e52;
+									border-radius: 50%;
+								"
+							></span>
+						</p>
+						<h2>14%</h2>
+					</div>
+					<div class="stat">
+						<p>
+							Pace (wpm)
+							<span
+								style="
+									width: 10px;
+									height: 10px;
+									display: inline-block;
+									background: #59c490;
+									border-radius: 50%;
+								"
+							></span>
+						</p>
+						<h2>149</h2>
+					</div>
+					<div class="stat">
+						<p>
+							Duration (s)
+							<span
+								style="
+									width: 10px;
+									height: 10px;
+									display: inline-block;
+									background: #59c490;
+									border-radius: 50%;
+								"
+							></span>
+						</p>
+						<h2>127</h2>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            <div class="transcriptLog">
-                <!-- <audio controls>
+		<div class="transcriptContainer">
+			<h1 class="transcriptTitle">Transcript</h1>
+
+			<div class="transcriptLog">
+				<!-- <audio controls>
                     <source class="audio" src="" type="">
                 </audio> -->
-                  
-                <p>Jane:  "Hello, I'm Jane, and I'm excited to meet with you today to discuss your experience and how it aligns with our Product Design role. Let's start by delving into your background and design expertise! Please tell me a little about yourself."</p>
-                <p style="font-weight: bold;">You:  "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm genuinely thrilled to be here today. So um with my previous experience working at nwPlus, I'm eager to like dive into our discussion, about how my design journey aligns with the goals of the Product Design role at Figma."</p>
 
-                <p>Jane:  "Hello, I'm Jane, and I'm excited to meet with you today to discuss your experience and how it aligns with our Product Design role. Let's start by delving into your background and design expertise! Please tell me a little about yourself."</p>
-                <p style="font-weight: bold;">You:  "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm genuinely thrilled to be here today. So um with my previous experience working at nwPlus, I'm eager to like dive into our discussion, about how my design journey aligns with the goals of the Product Design role at Figma."</p>
-                
-                <p>Jane:  "Hello, I'm Jane, and I'm excited to meet with you today to discuss your experience and how it aligns with our Product Design role. Let's start by delving into your background and design expertise! Please tell me a little about yourself."</p>
-                <p style="font-weight: bold;">You:  "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm genuinely thrilled to be here today. So um with my previous experience working at nwPlus, I'm eager to like dive into our discussion, about how my design journey aligns with the goals of the Product Design role at Figma."</p>
+				<p>
+					Jane: "Hello, I'm Jane, and I'm excited to meet with you today to
+					discuss your experience and how it aligns with our Product Design
+					role. Let's start by delving into your background and design
+					expertise! Please tell me a little about yourself."
+				</p>
+				<p style="font-weight: bold">
+					You: "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm
+					genuinely thrilled to be here today. So um with my previous experience
+					working at nwPlus, I'm eager to like dive into our discussion, about
+					how my design journey aligns with the goals of the Product Design role
+					at Figma."
+				</p>
 
-                <p>Jane:  "Hello, I'm Jane, and I'm excited to meet with you today to discuss your experience and how it aligns with our Product Design role. Let's start by delving into your background and design expertise! Please tell me a little about yourself."</p>
-                <p style="font-weight: bold;">You:  "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm genuinely thrilled to be here today. So um with my previous experience working at nwPlus, I'm eager to like dive into our discussion, about how my design journey aligns with the goals of the Product Design role at Figma."</p>
-            </div>
-        </div>
+				<p>
+					Jane: "Hello, I'm Jane, and I'm excited to meet with you today to
+					discuss your experience and how it aligns with our Product Design
+					role. Let's start by delving into your background and design
+					expertise! Please tell me a little about yourself."
+				</p>
+				<p style="font-weight: bold">
+					You: "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm
+					genuinely thrilled to be here today. So um with my previous experience
+					working at nwPlus, I'm eager to like dive into our discussion, about
+					how my design journey aligns with the goals of the Product Design role
+					at Figma."
+				</p>
+
+				<p>
+					Jane: "Hello, I'm Jane, and I'm excited to meet with you today to
+					discuss your experience and how it aligns with our Product Design
+					role. Let's start by delving into your background and design
+					expertise! Please tell me a little about yourself."
+				</p>
+				<p style="font-weight: bold">
+					You: "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm
+					genuinely thrilled to be here today. So um with my previous experience
+					working at nwPlus, I'm eager to like dive into our discussion, about
+					how my design journey aligns with the goals of the Product Design role
+					at Figma."
+				</p>
+
+				<p>
+					Jane: "Hello, I'm Jane, and I'm excited to meet with you today to
+					discuss your experience and how it aligns with our Product Design
+					role. Let's start by delving into your background and design
+					expertise! Please tell me a little about yourself."
+				</p>
+				<p style="font-weight: bold">
+					You: "Hi Jane, it’s great to meet you too! I'm uh Martha, and I'm
+					genuinely thrilled to be here today. So um with my previous experience
+					working at nwPlus, I'm eager to like dive into our discussion, about
+					how my design journey aligns with the goals of the Product Design role
+					at Figma."
+				</p>
+			</div>
+		</div>
 	</body>
 </html>
