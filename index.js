@@ -76,6 +76,10 @@ app.get("/dashboard", (req, res) => {
 	res.render("dashboardPage.ejs");
 });
 
+app.get("/finished", (req, res) => {
+	res.render("finishedPage.ejs");
+});
+
 app.get("/interviewSummary", (req, res) => {
 	res.render("interviewSummary.ejs");
 });

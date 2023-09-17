@@ -1,0 +1,53 @@
+html {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.center-both {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Horizontal centering */
+  align-items: center;
+  /* Vertical centering */
+  height: 100vh;
+}
+
+/* Style the element in the bottom left corner */
+.bottom-left {
+  position: absolute;
+  /* Position it absolutely within the container */
+  bottom: 0;
+  /* Align it to the bottom */
+  left: 0;
+  /* Align it to the left */
+}
+
+.top-right {
+  background-color: transparent;
+  padding: 0px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Style for the button */
+#readyBtn {
+  padding: 10px 20px;
+  /* Adjust padding values as needed */
+  margin: 25px;
+  /* Adjust margin values as needed */
+  border: 2px solid rgb(56, 165, 163);
+  border-radius: 5px;
+  background-color: transparent;
+  color: rgb(56, 165, 163);
+  font-weight: bold;
+  font-size: 18px;
+
+}

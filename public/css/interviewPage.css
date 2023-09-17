@@ -17,6 +17,7 @@ html {
 
 /* Facemesh */
 @use "@material";
+
 body {
   font-family: helvetica, arial, sans-serif;
   margin: 2em;
@@ -138,4 +139,57 @@ footer {
   height: 16px;
   align-items: center;
   background-color: #007f8b;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  margin: 10vh 15vw;
+}
+
+.bg {
+  position: absolute;
+  width: 50vh;
+  margin: 0;
+  z-index: -1;
+}
+
+.logo {
+  align-self: center;
+  width: 60px;
+  margin-bottom: 50px;
+}
+
+#getStarted {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  margin-bottom: 24px;
+}
+
+#access {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  margin-bottom: 60px;
+}
+
+#readyBtn {
+  display: inline;
+  padding: 12px 24px;
+  border-width: 1.7px;
+  border-style: solid;
+  border-color: #319795;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #319795;
+  background-color: white;
+  cursor: pointer;
+}
+
+#readyBtn:hover {
+  background-color: #319795;
+  color: white;
 }

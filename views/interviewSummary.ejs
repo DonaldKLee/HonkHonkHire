@@ -29,6 +29,7 @@
 
 		<div class="step" style="align-items: center">
 			<img class="logo" src="/assets/logogoose.svg" alt="logo" />
+			<button id="toDashboard" onclick="gotoDashboard()">Dashboard →</button>
 		</div>
 		<div class="titleContainer">
 			<h1 id="title">Today's Interview</h1>
@@ -155,5 +156,11 @@
 				</p>
 			</div>
 		</div>
+
+		<script>
+			function gotoDashboard() {
+				window.location.href = "/dashboard";
+			}
+		</script>
 	</body>
 </html>
